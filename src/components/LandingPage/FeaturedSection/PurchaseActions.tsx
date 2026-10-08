@@ -19,7 +19,7 @@ export default function PurchaseActions({ price, added, liked, onAdd, onToggleLi
           }`}
         >
           <Icon name="shopping_bag" className="text-[20px]" />
-          <span>{added ? 'Added to Bag!' : `Add to Bag — $${price.toFixed(2)}`}</span>
+          <span>{added ? 'Added to Bag!' : `Add to Bag — ₱${price.toFixed(2)}`}</span>
         </button>
         <button
           aria-label="Add to Wishlist"

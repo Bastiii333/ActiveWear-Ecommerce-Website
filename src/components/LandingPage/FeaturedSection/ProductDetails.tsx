@@ -27,8 +27,8 @@ export default function ProductDetails({ product }: { product: Spotlight }) {
           {product.title}
         </h3>
         <div className="flex flex-wrap items-center gap-space-sm mt-2">
-          <span className="font-headline-md text-headline-md font-bold text-on-primary">${product.price.toFixed(2)}</span>
-          <span className="font-body-sm text-body-sm text-on-primary-container line-through">${product.oldPrice.toFixed(2)}</span>
+          <span className="font-headline-md text-headline-md font-bold text-on-primary">₱{product.price.toFixed(2)}</span>
+          <span className="font-body-sm text-body-sm text-on-primary-container line-through">₱{product.oldPrice.toFixed(2)}</span>
           <span className="bg-tertiary-container text-on-tertiary text-label-technical font-label-technical px-2 py-0.5 rounded uppercase">
             Save {save}%
           </span>

@@ -17,7 +17,7 @@ export default function DivisionCard({ division: d }: { division: Division }) {
             <h3 className="font-headline-sm text-headline-sm uppercase text-on-surface tracking-tight">{d.title}</h3>
           </div>
           <span className="font-label-technical text-label-technical bg-surface-container-low px-2 py-1 rounded text-on-surface-variant font-bold whitespace-nowrap">
-            From ${d.price}
+            From ₱{d.price}
           </span>
         </div>
 
