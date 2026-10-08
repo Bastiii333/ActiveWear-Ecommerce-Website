@@ -4,5 +4,9 @@ interface IconProps {
 }
 
 export default function Icon({ name, className = '' }: IconProps) {
-  return <span className={`material-symbols-outlined ${className}`}>{name}</span>
+  return (
+    <span className={`material-symbols-outlined ${className}`} aria-hidden="true">
+      {name}
+    </span>
+  )
 }
