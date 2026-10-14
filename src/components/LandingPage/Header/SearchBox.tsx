@@ -11,7 +11,7 @@ export default function SearchBox() {
         className="bg-transparent w-full text-on-surface font-body-sm text-body-sm focus:outline-none placeholder:text-on-surface-variant/60"
       />
       <span className="font-label-technical text-label-technical text-on-surface-variant bg-surface-container-lowest px-1.5 py-0.5 rounded shadow-sm">
-        ⌘K
+      
       </span>
     </div>
   )
