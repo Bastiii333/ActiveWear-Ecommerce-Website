@@ -67,24 +67,32 @@ function HeroMetrics() {
 // HeroVisual
 function HeroVisual() {
   return (
-<></>
+    <div className="flex-shrink-0 ">
+      <img
+        src={IMAGES.heromodel}
+        alt="Hero Model"
+        className="w-140 h-auto object-cover "
+      />
+    </div>
   )
 }
 
 // HeroSection
 export function HeroSection() {
   return (
-    <section className="relative w-full bg-surface-container-lowest bg-no-repeat overflow-hidden "  style={{ backgroundImage: `url(${IMAGES.heromodel})` }}>
+    <section className="w-full bg-surface-container-lowest bg-no-repeat overflow-hidden flex flex-row items-center justify-center">
       {/* decorative glows */}
       
-      <div className="absolute top-1/2 -left-36 w-[500px] h-[500px] bg-surface-container-high/60 rounded-full blur-2xl pointer-events-none" />
+      {/* <div className="absolute top-1/2 -left-36 w-[500px] h-[500px] bg-surface-container-high/60 rounded-full blur-2xl pointer-events-none" /> */}
 
-      <Container className="py-space-xl lg:py-margin-lg relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+        <div className="p-20"> 
           <HeroContent />
+        </div>
+           
+        <div className="hidden xl:block">
           <HeroVisual />
         </div>
-      </Container>
+
     </section>
   )
 }
