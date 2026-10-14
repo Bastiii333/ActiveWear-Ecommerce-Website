@@ -1,12 +1,13 @@
 interface IconProps {
   name: string
   className?: string
+
 }
 
-export default function Icon({ name, className = '' }: IconProps) {
+export default function Icon({ name, className = '' } : IconProps) {
   return (
     <span className={`material-symbols-outlined ${className}`} aria-hidden="true">
-      {name}
+      {name} 
     </span>
   )
 }

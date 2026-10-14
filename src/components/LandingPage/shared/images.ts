@@ -1,8 +1,10 @@
 
 import logo from '../../../assets/ActiveWearLogo.png';
+import heromodel from '../../../assets/ActiveWearModelHeroSection.png';
 
 export const IMAGES = {
   logo,
+  heromodel,
   profile: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD3uA8RsHGQFXtAnSoYoH6hcH5KUI_Vl4SOszECMgaWsOgKj8MPhXdWt-R8FB5VrZF0xgjkSbcHy0ifMcp0e8S0ie6lvELZ607UnNesIZCOmZIfXg5q8N6rq0Ka7RffAcf4VGzhtXsl0pxi-pyT49r_YClxBSOUF5-Kjysav67sSV2XwIHDxdPe52aR2acQ0IkMhQ9l73WMWGvt9iY1Fnnbjp3jJ4cQTwWepH9RSrQ3rb--NprRB-ZhwA',
   hero: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCbAZlJDcOEabynlieSghv8_Va2eSgR2X4H6RUqrlIrB_2ppcttJ59gWizBU-cFJpFZcE3h5YwLtxfgLZZ3lnHkjaWS-8AGj2pkMkQTBl3HCo9YvZaSseLnS2bRpZZmwtH0-HaAPGp6HA7TBooKQTGkXZ8fdUCdwWGu4J-X-n0AXEc91-eiOuuUtQXZJL_WzrnMt8KTr72sqChqsI1glcfn8-2ISgttW6v5mNolonHCJqv18M08ffGXdg',
   tops: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDOjw0w--MspxICKkWELLYlWXQzTTcAXsFKNkFTJGqF2q-HA2BTKcYegTwlZjQyeUAHRN9VVVcSh3O4Iso53MXAIoUdpTjVhtRzNdS2hzxHtUufc3IJLxE0AQuy9SF14Iqf7JdYX5zyLedPcgrHmlk3GEbfknig-N8413rUQz8RWqZNr4t_l9CLsw3_H3sntwYBrl0gQmYffDUnWlrRJfHJKrqpycv5cDcAyUcKj9zm--2FWPJWeVaEfg',

@@ -18,14 +18,16 @@ function HeaderActions() {
   return (
     <div className="flex items-center gap-space-sm shrink-0">
       <button aria-label="Search" className="lg:hidden p-space-xs text-on-surface-variant hover:text-on-surface">
-        <Icon name="search" />
+        <Icon name="search"  />
       </button>
       <a href="#" aria-label="Wishlist" className="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
         <Icon name="favorite" />
+        {/* Display a badge conditionally and dynamically later on*/}
         <span className={`${badgeBase} bg-primary text-on-primary`}>0</span>
       </a>
       <a href="#" aria-label="Cart" className="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
         <Icon name="shopping_bag" />
+         {/* Display a badge conditionally and dynamically later on*/}
         <span className={`${badgeBase} bg-tertiary-container text-on-tertiary font-bold`}>2</span>
       </a>
       <a href="#" aria-label="Account" className="p-space-xs transition-opacity hover:opacity-90 ml-space-xs">
