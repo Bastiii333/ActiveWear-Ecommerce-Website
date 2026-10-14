@@ -13,5 +13,7 @@ All styling is Tailwind utility classes. The design tokens (colors, spacing, fon
 
 ## Structure
 - `src/App.tsx` – composes the page
-- `src/components/` – Header, Hero, PerformanceDivisions (+ DivisionCard), FeaturedSpotlight, OlympicEditorial, AnatomyBento, Footer, Icon
-- `src/data/` – copy/content and image URLs
+- `src/components/LandingPage/LandingPage.tsx` – page composition
+- `src/components/LandingPage/*/index.tsx` – one readable implementation per page section, with closely related subcomponents kept together
+- `src/components/LandingPage/*/data.ts` and `types.ts` – section-specific content and types
+- `src/components/LandingPage/shared/` – genuinely shared layout, icon, status, and image helpers
