@@ -24,13 +24,7 @@ function GridToolbar({
         <span className="font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
           Showing {shown} of {total} items
         </span>
-        <span className="hidden text-outline-variant sm:inline">•</span>
-        <span className="flex min-w-0 flex-wrap items-center gap-1.5">
-          <StatusDot className="bg-emerald-500" />
-          <span className="font-label-technical text-label-technical uppercase tracking-widest text-on-surface-variant">
-            Ready for global dispatch
-          </span>
-        </span>
+        
       </div>
 
       <div className="flex items-center justify-between gap-space-sm lg:justify-end">

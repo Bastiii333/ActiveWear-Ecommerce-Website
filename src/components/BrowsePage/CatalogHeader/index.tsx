@@ -30,7 +30,7 @@ export function CatalogHeader() {
     <section className="w-full bg-surface">
       <Container>
         <div className="pt-space-lg pb-space-xl">
-          <Breadcrumb />
+          <Breadcrumb />{/* try to hide this and compare on the meeting */}
           <h1 className="mt-space-md font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface uppercase">
             {CATALOG_INTRO.title}
           </h1>
