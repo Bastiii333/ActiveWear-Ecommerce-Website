@@ -17,3 +17,6 @@ All styling is Tailwind utility classes. The design tokens (colors, spacing, fon
 - `src/components/LandingPage/*/index.tsx` – one readable implementation per page section, with closely related subcomponents kept together
 - `src/components/LandingPage/*/data.ts` and `types.ts` – section-specific content and types
 - `src/components/LandingPage/shared/` – genuinely shared layout, icon, status, and image helpers
+- `src/components/BrowsePage/` – catalog page: header, category tabs, filter sidebar, product grid
+- `src/components/BrowsePage/hooks/useCatalogFilters.ts` – filter state + `GET /api/products` query string
+- `src/lib/useHashRoute.ts` – `#/shop` switch between the landing page and the catalog
