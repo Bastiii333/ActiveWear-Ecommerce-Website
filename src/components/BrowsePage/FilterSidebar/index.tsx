@@ -1,4 +1,6 @@
+import { useLayoutEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 import { Icon } from '../../LandingPage/shared'
 import { DISCIPLINES, PALETTE, PRICE_BOUNDS, SIZES } from '../data'
 import { formatPrice } from '../format'
@@ -71,23 +73,55 @@ function FilterSection({
 }
 
 function ActiveChips({ controller }: { controller: CatalogFilterController }) {
-  if (controller.chips.length === 0) return null
+  const contentRef = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useState(0)
+
+  // Animate real height (not transform) so the filter groups below flow with the chips.
+  useLayoutEffect(() => {
+    const node = contentRef.current
+    if (!node) return
+
+    const measure = () => setHeight(node.offsetHeight)
+    measure()
+
+    const observer = new ResizeObserver(measure)
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <div className="flex flex-wrap gap-1.5 pt-space-sm">
-      {controller.chips.map((chip) => (
-        <button
-          key={chip.key}
-          type="button"
-          onClick={chip.clear}
-          aria-label={`Remove filter: ${chip.label}`}
-          className="flex items-center gap-1 rounded border border-surface-container-high bg-surface-container-low px-2 py-1 font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant transition-colors hover:text-on-surface"
-        >
-          <span>{chip.label}</span>
-          <Icon name="close" className="text-[12px]" />
-        </button>
-      ))}
-    </div>
+    <motion.div
+      initial={false}
+      animate={{ height }}
+      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+      className="overflow-hidden"
+    >
+      <div ref={contentRef} className={`flex flex-wrap gap-1.5 ${controller.chips.length ? 'pt-space-sm' : ''}`}>
+        <AnimatePresence initial={false} mode="popLayout">
+          {controller.chips.map((chip) => (
+            <motion.button
+              key={chip.key}
+              layout
+              type="button"
+              onClick={chip.clear}
+              aria-label={`Remove filter: ${chip.label}`}
+              initial={{ opacity: 0, scale: 0.8, y: -6 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -6 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 520, damping: 34, mass: 0.6 }}
+              className="group flex items-center gap-1 rounded border border-surface-container-high bg-surface-container-low px-2 py-1 font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant transition-colors hover:border-outline-variant hover:text-on-surface"
+            >
+              <span>{chip.label}</span>
+              <Icon
+                name="close"
+                className="text-[12px] transition-transform duration-200 group-hover:rotate-90"
+              />
+            </motion.button>
+          ))}
+        </AnimatePresence>
+      </div>
+    </motion.div>
   )
 }
 
@@ -113,7 +147,16 @@ function DisciplineFilter({ controller, facets }: { controller: CatalogFilterCon
                   : 'border-outline-variant bg-surface-container-lowest'
               }`}
             >
-              {checked && <Icon name="check" className="text-[12px]" />}
+              {checked && (
+                <motion.span
+                  initial={{ scale: 0.4, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: 'spring', stiffness: 600, damping: 26 }}
+                  className="flex"
+                >
+                  <Icon name="check" className="text-[12px]" />
+                </motion.span>
+              )}
             </span>
             <span className="flex-1 font-body-sm text-body-sm text-on-surface">{option.label}</span>
             {typeof count === 'number' && (

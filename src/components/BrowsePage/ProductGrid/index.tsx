@@ -1,4 +1,4 @@
-import { Icon, StatusDot } from '../../LandingPage/shared'
+import { Icon } from '../../LandingPage/shared'
 import { SORT_OPTIONS } from '../data'
 import type { Product, ProductLayout, SortKey } from '../types'
 import { ProductCard } from './ProductCard'
@@ -24,7 +24,6 @@ function GridToolbar({
         <span className="font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
           Showing {shown} of {total} items
         </span>
-        
       </div>
 
       <div className="flex items-center justify-between gap-space-sm lg:justify-end">
