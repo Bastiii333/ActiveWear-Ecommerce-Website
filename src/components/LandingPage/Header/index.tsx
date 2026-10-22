@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Icon, IMAGES, Container } from '../shared'
 import { NAV_LINKS, ANNOUNCEMENT } from './data'
 
 // AnnouncementBar
 function AnnouncementBar() {
   return (
-    <div id="site-announcement-bar" data-component="AnnouncementBar" className="w-full bg-primary text-on-primary py-space-xs px-gutter-sm text-center font-label-technical text-label-technical tracking-widest uppercase">
+    <div id="site-announcement-bar" data-component="AnnouncementBar" className="w-full bg-surface-container-lowest text-on-surface py-space-xs px-gutter-sm text-center font-label-technical text-label-technical tracking-widest uppercase">
       {ANNOUNCEMENT}
     </div>
   )
@@ -15,40 +15,58 @@ function AnnouncementBar() {
 const badgeBase =
   'absolute top-1 right-1 w-4 h-4 font-label-technical text-[10px] leading-none rounded-full flex items-center justify-center'
 
-function HeaderActions() {
+interface HeaderVariantProps {
+  overlay?: boolean
+}
+
+function HeaderActions({ overlay = false }: HeaderVariantProps) {
+  const action = overlay
+    ? 'p-space-xs text-white/90 hover:text-white transition-colors'
+    : 'p-space-xs text-on-surface-variant hover:text-on-surface transition-colors'
+
   return (
     <div data-component="HeaderActions" className="flex items-center gap-space-sm shrink-0">
-      <button aria-label="Search" id="site-mobile-search-button" className="lg:hidden p-space-xs text-on-surface-variant hover:text-on-surface">
-        <Icon name="search"  />
+      <button aria-label="Search" id="site-mobile-search-button" className={`${overlay ? '' : 'lg:hidden'} ${action}`}>
+        <Icon name="search" />
       </button>
-      <a href="#" aria-label="Wishlist" id="site-wishlist-link" className="relative hidden sm:inline-flex p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
+      <a href="#" aria-label="Wishlist" id="site-wishlist-link" className={`relative hidden sm:inline-flex ${action}`}>
         <Icon name="favorite" />
         {/* Display a badge conditionally and dynamically later on*/}
-        <span data-element="wishlist-count-badge" className={`${badgeBase} -translate-y-[3px] bg-primary text-on-primary`}>0</span>
+        <span data-element="wishlist-count-badge" className={`${badgeBase} -translate-y-[3px] ${overlay ? 'bg-white text-primary' : 'bg-primary text-on-primary'}`}>0</span>
       </a>
-      <a href="#" aria-label="Cart" id="site-cart-link" className="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
+      <a href="#" aria-label="Cart" id="site-cart-link" className={`relative ${action}`}>
         <Icon name="shopping_bag" />
          {/* Display a badge conditionally and dynamically later on*/}
         <span data-element="cart-count-badge" className={`${badgeBase} bg-tertiary-container text-on-tertiary font-bold`}>0</span>
       </a>
-      <a href="#" aria-label="Account" id="site-account-link" className="p-space-xs transition-opacity hover:opacity-90 ml-space-xs">
-        <img alt="Profile" className="w-8 h-8 rounded-full object-cover" src={IMAGES.profile} />
-      </a>
+      {overlay ? (
+        <a href="#" aria-label="Account" id="site-account-link" className={`ml-space-xs ${action}`}>
+          <Icon name="person" />
+        </a>
+      ) : (
+        <a href="#" aria-label="Account" id="site-account-link" className="p-space-xs transition-opacity hover:opacity-90 ml-space-xs">
+          <img alt="Profile" className="w-8 h-8 rounded-full object-cover" src={IMAGES.profile} />
+        </a>
+      )}
     </div>
   )
 }
 
 // Logo
-function Logo() {
+function Logo({ overlay = false }: HeaderVariantProps) {
   return (
     <a href="#" id="site-logo-link" data-component="Logo" className="flex items-center gap-space-sm shrink-0">
-      <img alt="ActiveWear Brand Logo" className="h-9 md:h-12 w-auto object-contain" src={IMAGES.logo} />
+      <img
+        alt="ActiveWear Brand Logo"
+        className={`h-9 md:h-12 w-auto object-contain ${overlay ? 'brightness-0 invert' : ''}`}
+        src={IMAGES.logo}
+      />
     </a>
   )
 }
 
 // NavLinks
-function NavLinks() {
+function NavLinks({ overlay = false }: HeaderVariantProps) {
   const isShop = window.location.hash.startsWith('#/shop')
 
   return (
@@ -60,7 +78,13 @@ function NavLinks() {
           data-element="primary-nav-link"
           aria-current={isShop && link.href === '#/shop' ? 'page' : undefined}
           className={`font-label-lg text-label-lg uppercase tracking-wider transition-colors ${
-            i === 0 ? 'text-on-surface font-bold' : 'text-on-surface-variant hover:text-on-surface'
+            overlay
+              ? i === 0
+                ? 'text-white font-bold'
+                : 'text-white/75 hover:text-white'
+              : i === 0
+                ? 'text-on-surface font-bold'
+                : 'text-on-surface-variant hover:text-on-surface'
           }`}
         >
           {link.label}
@@ -104,25 +128,77 @@ function SearchBox({ value, onChange }: SearchBoxProps) {
   )
 }
 
-// Header
-interface HeaderProps {
+// HeaderContent
+interface HeaderContentProps extends HeaderVariantProps {
   searchValue?: string
   onSearchChange?: (value: string) => void
 }
 
-export function Header({ searchValue, onSearchChange }: HeaderProps = {}) {
+function HeaderContent({ overlay = false, searchValue, onSearchChange }: HeaderContentProps) {
   return (
-    <header id="site-header" data-component="Header" className="fixed top-0 left-0 right-0 z-50">
+    <>
+      <Logo overlay={overlay} />
+      <NavLinks overlay={overlay} />
+      <div className="flex items-center gap-space-md flex-1 max-w-md justify-end">
+        {!overlay && <SearchBox value={searchValue} onChange={onSearchChange} />}
+        <HeaderActions overlay={overlay} />
+      </div>
+    </>
+  )
+}
+
+// Header
+interface HeaderProps {
+  searchValue?: string
+  onSearchChange?: (value: string) => void
+  /** `overlay` floats the bar over a dark hero with white content and a hover scrim. */
+  variant?: 'default' | 'overlay'
+}
+
+export function Header({ searchValue, onSearchChange, variant = 'default' }: HeaderProps = {}) {
+  const overlay = variant === 'overlay'
+  const [scrolled, setScrolled] = useState(false)
+
+  // Keep the nav readable once the hero scrolls behind the bar.
+  useEffect(() => {
+    if (!overlay) return
+
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [overlay])
+
+  return (
+    <header
+      id="site-header"
+      data-component="Header"
+      className="fixed top-0 left-0 right-0 z-50"
+    >
       <AnnouncementBar />
-      <div data-element="header-bar" className="h-20 w-full bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
-        <Container className="h-full flex items-center justify-between gap-space-lg">
-          <Logo />
-          <NavLinks />
-          <div className="flex items-center gap-space-md flex-1 max-w-md justify-end">
-            <SearchBox value={searchValue} onChange={onSearchChange} />
-            <HeaderActions />
+      <div data-element="header-bar" className="group/bar relative h-20 w-full">
+        {overlay ? (
+          <>
+            <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/15 to-transparent" />
+            {/* Dark scrim on hover/focus and after scroll: keeps white nav legible over bright video frames. */}
+            <div
+              aria-hidden="true"
+              className={`absolute inset-0 bg-primary/75 backdrop-blur-md transition-opacity duration-300 motion-reduce:transition-none group-hover/bar:opacity-100 group-focus-within/bar:opacity-100 ${scrolled ? 'opacity-100' : 'opacity-0'}`}
+            />
+          </>
+        ) : (
+          <div aria-hidden="true" className="absolute inset-0 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]" />
+        )}
+
+        {overlay ? (
+          <div className="relative flex h-full items-center justify-between gap-space-lg px-5 md:px-8 xl:px-10">
+            <HeaderContent overlay searchValue={searchValue} onSearchChange={onSearchChange} />
           </div>
-        </Container>
+        ) : (
+          <Container className="relative h-full flex items-center justify-between gap-space-lg">
+            <HeaderContent searchValue={searchValue} onSearchChange={onSearchChange} />
+          </Container>
+        )}
       </div>
     </header>
   )
