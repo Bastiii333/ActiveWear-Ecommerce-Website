@@ -11,7 +11,7 @@ interface DisciplineFilterProps {
 
 function DisciplineFilter({ active, onChange }: DisciplineFilterProps) {
   return (
-    <div data-component="DivisionDisciplineFilter" className="flex items-center gap-2 overflow-x-auto pb-2 mb-space-xl text-nowrap">
+    <div data-component="DivisionDisciplineFilter" className="flex items-center justify-center gap-2 overflow-x-auto pb-2 mb-space-xl text-nowrap">
       {DISCIPLINES.map((d, i) => {
         const isActive = i === active
         return (
@@ -59,21 +59,12 @@ function DivisionCard({ division: d }: { division: Division }) {
 
         <p className="font-body-sm text-body-sm text-on-surface-variant">{d.description}</p>
 
-        <DivisionMetrics metrics={d.metrics} />
-
         <div className="pt-space-xs flex items-center gap-space-xs">
           <button data-element="division-cta" className="group/btn flex-1 bg-primary-container hover:bg-primary text-on-primary py-3 px-space-md rounded-lg transition-all duration-200 flex items-center justify-between shadow-md hover:shadow-lg">
             <span className="font-label-technical uppercase tracking-wider text-[12px]">{d.cta}</span>
             <Icon name="arrow_forward" className="text-[18px] transition-transform duration-200 group-hover/btn:translate-x-1" />
           </button>
-          <a
-            href="#"
-            aria-label={`Quick look ${d.title}`}
-            data-element="division-quick-look"
-            className="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface flex items-center justify-center transition-colors"
-          >
-            <Icon name="tune" className="text-[20px]" />
-          </a>
+
         </div>
 
         <div data-element="division-system-code" className="font-label-technical text-[10px] text-outline tracking-widest uppercase flex items-center justify-between pt-0.5">
@@ -97,81 +88,23 @@ function DivisionMedia({ division: d }: { division: Division }) {
         src={d.image}
       />
 
-      <div className="absolute top-3 left-3 right-16 flex flex-wrap gap-1.5">
-        <span data-element="division-badge" className="bg-surface-container-lowest/95 backdrop-blur-md px-2.5 py-1 rounded-full text-on-surface font-label-technical text-label-technical uppercase tracking-wider shadow-sm flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-tertiary-container" />
-          {d.badgeA}
-        </span>
-        <span data-element="division-badge" className="bg-tertiary-container text-on-tertiary font-label-technical text-label-technical uppercase tracking-widest px-2 py-1 rounded-full shadow-sm font-bold">
-          {d.badgeB}
-        </span>
-      </div>
-
-      <div className="absolute top-3 right-3">
-        <span data-element="division-code" className="bg-primary-container/85 backdrop-blur-md text-on-primary font-label-technical text-label-technical uppercase px-2 py-0.5 rounded shadow-sm whitespace-nowrap">
-          DIV // {d.code}
-        </span>
-      </div>
-
-      <div className="absolute inset-x-3 bottom-3 bg-primary-container/90 backdrop-blur-md rounded-lg p-2.5 text-on-primary shadow-md">
-        <div className="flex items-center justify-between font-label-technical text-label-technical uppercase tracking-wider text-on-tertiary-container mb-1.5">
-          <span>Key Subcategories</span>
-          <span className="text-on-primary font-bold">{d.styles} Styles</span>
-        </div>
-        <div className="flex flex-wrap gap-1">
-          {d.subcategories.map((s) => (
-            <a
-              key={s}
-              href="#"
-              data-element="division-subcategory-link"
-              className="bg-surface-container-lowest/15 hover:bg-surface-container-lowest/30 text-on-primary px-2 py-1 rounded text-label-technical uppercase transition-colors"
-            >
-              {s}
-            </a>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }
 
 // DivisionMetrics
-function DivisionMetrics({ metrics }: { metrics: DivisionMetric[] }) {
-  return (
-    <div data-component="DivisionMetrics" className="grid grid-cols-3 gap-1.5 bg-surface-container-low/70 p-2 rounded-lg font-label-technical text-label-technical text-on-surface-variant uppercase text-center">
-      {metrics.map((m) => (
-        <div key={m.label} className="bg-surface-container-lowest py-1 rounded shadow-sm">
-          <span className={`block font-bold ${m.accent ? 'text-tertiary-container' : 'text-on-surface'}`}>{m.value}</span>
-          <span className="text-[10px] text-outline">{m.label}</span>
-        </div>
-      ))}
-    </div>
-  )
-}
 
 // DivisionsHeader
 function DivisionsHeader() {
   return (
-    <div data-component="DivisionsHeader" className="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md mb-space-lg">
+    <div data-component="DivisionsHeader" className="flex flex-row lg:flex-col lg:items-center justify-between gap-space-md mb-space-lg">
       <div>
-        <div className="flex flex-wrap items-center gap-space-xs mb-space-xs">
-          <StatusDot />
-          <span className="font-label-technical text-label-technical text-tertiary-container uppercase tracking-widest font-bold">
-            Curation Matrix // Lab Series 04
-          </span>
-          <span className="mx-1 text-outline-variant">•</span>
-          <span className="font-label-technical text-label-technical text-on-surface-variant uppercase tracking-wider bg-surface-container px-2 py-0.5 rounded-full">
-            240 Active Configurations
-          </span>
-        </div>
+
         <h2 id="divisions-heading" className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface uppercase">
-          Performance Divisions
+          Categories
         </h2>
       </div>
-      <p className="font-body-sm text-body-sm text-on-surface-variant max-w-md">
-        Biomechanically calibrated apparel engineered for thermal equilibrium, hyper-stretch recovery, and wind-tunnel
-        aero-efficiency.
-      </p>
+
     </div>
   )
 }

@@ -24,12 +24,12 @@ function HeaderActions() {
       <a href="#" aria-label="Wishlist" id="site-wishlist-link" className="relative hidden sm:inline-flex p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
         <Icon name="favorite" />
         {/* Display a badge conditionally and dynamically later on*/}
-        <span data-element="wishlist-count-badge" className={`${badgeBase} bg-primary text-on-primary`}>0</span>
+        <span data-element="wishlist-count-badge" className={`${badgeBase} -translate-y-[3px] bg-primary text-on-primary`}>0</span>
       </a>
       <a href="#" aria-label="Cart" id="site-cart-link" className="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
         <Icon name="shopping_bag" />
          {/* Display a badge conditionally and dynamically later on*/}
-        <span data-element="cart-count-badge" className={`${badgeBase} bg-tertiary-container text-on-tertiary font-bold`}>2</span>
+        <span data-element="cart-count-badge" className={`${badgeBase} bg-tertiary-container text-on-tertiary font-bold`}>0</span>
       </a>
       <a href="#" aria-label="Account" id="site-account-link" className="p-space-xs transition-opacity hover:opacity-90 ml-space-xs">
         <img alt="Profile" className="w-8 h-8 rounded-full object-cover" src={IMAGES.profile} />
