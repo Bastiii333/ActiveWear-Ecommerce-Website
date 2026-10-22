@@ -41,36 +41,28 @@ function DisciplineFilter({ active, onChange }: DisciplineFilterProps) {
 // DivisionCard
 function DivisionCard({ division: d }: { division: Division }) {
   return (
-    <article data-component="DivisionCard" className="group bg-surface-container-lowest rounded-xl p-space-md shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-surface-container-high/70 relative">
+    <article data-component="DivisionCard" className="group bg-surface-container-lowest pb-space-md shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-surface-container-high/70 relative">
       <DivisionMedia division={d} />
 
-      <div className="space-y-space-sm pt-space-xs">
-        <div className="flex items-start justify-between gap-2">
+      <div className="flex flex-col items-center space-y-space-sm pt-space-md text-center">
+        <div className="flex items-start justify-center gap-2 text-center">
           <div>
             <div className="font-label-technical text-label-technical uppercase tracking-widest text-tertiary-container font-bold">
               {d.eyebrow}
             </div>
             <h3 className="font-headline-sm text-headline-sm uppercase text-on-surface tracking-tight">{d.title}</h3>
           </div>
-          <span className="font-label-technical text-label-technical bg-surface-container-low px-2 py-1 rounded text-on-surface-variant font-bold whitespace-nowrap">
-            From ₱{d.price}
-          </span>
-        </div>
-
-        <p className="font-body-sm text-body-sm text-on-surface-variant">{d.description}</p>
-
-        <div className="pt-space-xs flex items-center gap-space-xs">
-          <button data-element="division-cta" className="group/btn flex-1 bg-primary-container hover:bg-primary text-on-primary py-3 px-space-md rounded-lg transition-all duration-200 flex items-center justify-between shadow-md hover:shadow-lg">
-            <span className="font-label-technical uppercase tracking-wider text-[12px]">{d.cta}</span>
-            <Icon name="arrow_forward" className="text-[18px] transition-transform duration-200 group-hover/btn:translate-x-1" />
-          </button>
 
         </div>
 
-        <div data-element="division-system-code" className="font-label-technical text-[10px] text-outline tracking-widest uppercase flex items-center justify-between pt-0.5">
-          <span>SYS CODE: {d.sysCode}</span>
-          <span>VALIDATED: LAB 4</span>
+      
+
+        <div className="pt-space-xs flex items-center justify-center gap-space-xs">
+
+
         </div>
+
+
       </div>
     </article>
   )
@@ -80,10 +72,10 @@ function DivisionCard({ division: d }: { division: Division }) {
 /** Image area of a division card: badges, DIV tag and the subcategory overlay. */
 function DivisionMedia({ division: d }: { division: Division }) {
   return (
-    <div data-component="DivisionMedia" className="relative w-full aspect-[4/5] rounded-lg overflow-hidden bg-surface-container-low mb-space-sm">
+    <div data-component="DivisionMedia" className="relative w-full aspect-[4/5] rounded-none overflow-hidden bg-surface-container-low mb-space-sm">
       <img
         data-element="division-image"
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        className="w-full h-full rounded-t-xl rounded-b-none object-cover transition-transform duration-500 group-hover:scale-105"
         alt={d.imageAlt}
         src={d.image}
       />
