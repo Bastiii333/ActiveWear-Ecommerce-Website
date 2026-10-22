@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Icon, IMAGES, Container } from '../shared'
-import { NAV_LINKS, ANNOUNCEMENT } from './data'
+import { NAV_LINKS, LANDING_NAV_LINKS, ANNOUNCEMENT } from './data'
 
 // AnnouncementBar
-function AnnouncementBar() {
+function AnnouncementBar({ scrolled = false }: { scrolled?: boolean }) {
   return (
-    <div id="site-announcement-bar" data-component="AnnouncementBar" className="w-full bg-surface-container-lowest text-on-surface py-space-xs px-gutter-sm text-center font-label-technical text-label-technical tracking-widest uppercase">
+    <div id="site-announcement-bar" data-component="AnnouncementBar" className={`absolute inset-x-0 top-0 w-full bg-surface-container-lowest text-on-surface py-space-xs px-gutter-sm text-center font-label-technical text-label-technical tracking-widest uppercase transition-transform duration-300 motion-reduce:transition-none ${scrolled ? '-translate-y-full' : 'translate-y-0'}`}>
       {ANNOUNCEMENT}
     </div>
   )
@@ -19,28 +19,30 @@ interface HeaderVariantProps {
   overlay?: boolean
 }
 
-function HeaderActions({ overlay = false }: HeaderVariantProps) {
+function HeaderActions({ overlay = false, landing = false }: HeaderVariantProps & { landing?: boolean }) {
   const action = overlay
     ? 'p-space-xs text-white/90 hover:text-white transition-colors'
     : 'p-space-xs text-on-surface-variant hover:text-on-surface transition-colors'
 
   return (
     <div data-component="HeaderActions" className="flex items-center gap-space-sm shrink-0">
-      <button aria-label="Search" id="site-mobile-search-button" className={`${overlay ? '' : 'lg:hidden'} ${action}`}>
-        <Icon name="search" />
-      </button>
-      <a href="#" aria-label="Wishlist" id="site-wishlist-link" className={`relative hidden sm:inline-flex ${action}`}>
-        <Icon name="favorite" />
-        {/* Display a badge conditionally and dynamically later on*/}
-        <span data-element="wishlist-count-badge" className={`${badgeBase} -translate-y-[3px] ${overlay ? 'bg-white text-primary' : 'bg-primary text-on-primary'}`}>0</span>
-      </a>
+      {!landing && (
+        <>
+          <button aria-label="Search" id="site-mobile-search-button" className={`${overlay ? '' : 'lg:hidden'} ${action}`}>
+            <Icon name="search" />
+          </button>
+          <a href="#" aria-label="Wishlist" id="site-wishlist-link" className={`relative hidden sm:inline-flex ${action}`}>
+            <Icon name="favorite" />
+            <span data-element="wishlist-count-badge" className={`${badgeBase} -translate-y-[3px] ${overlay ? 'bg-white text-primary' : 'bg-primary text-on-primary'}`}>0</span>
+          </a>
+        </>
+      )}
       <a href="#" aria-label="Cart" id="site-cart-link" className={`relative ${action}`}>
         <Icon name="shopping_bag" />
-         {/* Display a badge conditionally and dynamically later on*/}
         <span data-element="cart-count-badge" className={`${badgeBase} bg-tertiary-container text-on-tertiary font-bold`}>0</span>
       </a>
       {overlay ? (
-        <a href="#" aria-label="Account" id="site-account-link" className={`ml-space-xs ${action}`}>
+        <a href="#" aria-label="Account" id="site-account-link" className={`ml-space-xs ${action} ${landing ? 'hidden lg:inline-flex' : ''}`}>
           <Icon name="person" />
         </a>
       ) : (
@@ -68,10 +70,11 @@ function Logo({ overlay = false }: HeaderVariantProps) {
 // NavLinks
 function NavLinks({ overlay = false }: HeaderVariantProps) {
   const isShop = window.location.hash.startsWith('#/shop')
+  const links = overlay ? LANDING_NAV_LINKS : NAV_LINKS
 
   return (
-    <nav id="site-primary-nav" data-component="NavLinks" className="hidden xl:flex items-center gap-space-lg" aria-label="Primary">
-      {NAV_LINKS.map((link, i) => (
+    <nav id="site-primary-nav" data-component="NavLinks" className={`hidden ${overlay ? 'lg:flex absolute left-1/2 -translate-x-1/2' : 'xl:flex'} items-center gap-space-lg`} aria-label="Primary">
+      {links.map((link, i) => (
         <a
           key={link.label}
           href={link.href}
@@ -132,18 +135,62 @@ function SearchBox({ value, onChange }: SearchBoxProps) {
 interface HeaderContentProps extends HeaderVariantProps {
   searchValue?: string
   onSearchChange?: (value: string) => void
+  menuOpen?: boolean
+  onMenuToggle?: () => void
 }
 
-function HeaderContent({ overlay = false, searchValue, onSearchChange }: HeaderContentProps) {
+function HeaderContent({ overlay = false, searchValue, onSearchChange, menuOpen = false, onMenuToggle }: HeaderContentProps) {
+  const landing = overlay
+
   return (
     <>
       <Logo overlay={overlay} />
       <NavLinks overlay={overlay} />
-      <div className="flex items-center gap-space-md flex-1 max-w-md justify-end">
+      <div className={`flex items-center gap-space-md ${landing ? '' : 'flex-1 max-w-md'} justify-end`}>
         {!overlay && <SearchBox value={searchValue} onChange={onSearchChange} />}
-        <HeaderActions overlay={overlay} />
+        <HeaderActions overlay={overlay} landing={landing} />
+        {landing && <MobileMenuButton menuOpen={menuOpen} onClick={onMenuToggle} />}
       </div>
     </>
+  )
+}
+
+function MobileMenuButton({ menuOpen, onClick }: { menuOpen: boolean; onClick?: () => void }) {
+  return (
+    <button
+      type="button"
+      aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+      aria-expanded={menuOpen}
+      aria-controls="site-mobile-menu"
+      className="p-space-xs text-white/90 transition-colors hover:text-white lg:hidden"
+      onClick={onClick}
+    >
+      <Icon name={menuOpen ? 'close' : 'menu'} />
+    </button>
+  )
+}
+
+function MobileMenu({ open }: { open: boolean }) {
+  return (
+    <div
+      id="site-mobile-menu"
+      data-component="MobileMenu"
+      className={`absolute right-5 top-full z-10 w-56 rounded-lg bg-surface-container-lowest p-space-sm shadow-lg lg:hidden ${open ? 'block' : 'hidden'}`}
+    >
+      {LANDING_NAV_LINKS.map((link) => (
+        <a key={link.label} href={link.href} className="block p-space-sm font-label-lg uppercase tracking-wider text-on-surface">
+          {link.label}
+        </a>
+      ))}
+      <a href="#" className="flex items-center gap-space-sm p-space-sm text-on-surface">
+        <Icon name="favorite" />
+        <span>Wishlist</span>
+      </a>
+      <a href="#" className="flex items-center gap-space-sm p-space-sm text-on-surface">
+        <Icon name="person" />
+        <span>Profile</span>
+      </a>
+    </div>
   )
 }
 
@@ -158,11 +205,10 @@ interface HeaderProps {
 export function Header({ searchValue, onSearchChange, variant = 'default' }: HeaderProps = {}) {
   const overlay = variant === 'overlay'
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   // Keep the nav readable once the hero scrolls behind the bar.
   useEffect(() => {
-    if (!overlay) return
-
     const onScroll = () => setScrolled(window.scrollY > 24)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -175,8 +221,8 @@ export function Header({ searchValue, onSearchChange, variant = 'default' }: Hea
       data-component="Header"
       className="fixed top-0 left-0 right-0 z-50"
     >
-      <AnnouncementBar />
-      <div data-element="header-bar" className="group/bar relative h-20 w-full">
+      <AnnouncementBar scrolled={scrolled} />
+      <div data-element="header-bar" className={`group/bar relative top-6 h-20 w-full transition-transform duration-300 motion-reduce:transition-none ${scrolled ? '-translate-y-6' : 'translate-y-0'}`}>
         {overlay ? (
           <>
             <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/15 to-transparent" />
@@ -192,7 +238,14 @@ export function Header({ searchValue, onSearchChange, variant = 'default' }: Hea
 
         {overlay ? (
           <div className="relative flex h-full items-center justify-between gap-space-lg px-5 md:px-8 xl:px-10">
-            <HeaderContent overlay searchValue={searchValue} onSearchChange={onSearchChange} />
+            <HeaderContent
+              overlay
+              searchValue={searchValue}
+              onSearchChange={onSearchChange}
+              menuOpen={menuOpen}
+              onMenuToggle={() => setMenuOpen((open) => !open)}
+            />
+            <MobileMenu open={menuOpen} />
           </div>
         ) : (
           <Container className="relative h-full flex items-center justify-between gap-space-lg">
