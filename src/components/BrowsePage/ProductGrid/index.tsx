@@ -19,9 +19,9 @@ function GridToolbar({
   onLayoutChange: (layout: ProductLayout) => void
 }) {
   return (
-    <div className="mb-space-md flex flex-col gap-space-sm lg:flex-row lg:items-center lg:justify-between">
+    <div data-component="GridToolbar" className="mb-space-md flex flex-col gap-space-sm lg:flex-row lg:items-center lg:justify-between">
       <div className="flex flex-wrap items-center gap-x-space-xs gap-y-1">
-        <span className="font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
+        <span id="browse-results-count" className="font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
           Showing {shown} of {total} items
         </span>
       </div>
@@ -33,6 +33,7 @@ function GridToolbar({
           </span>
           <div className="relative">
             <select
+              id="browse-sort-select"
               aria-label="Sort products"
               value={sort}
               onChange={(event) => onSortChange(event.target.value as SortKey)}
@@ -51,7 +52,7 @@ function GridToolbar({
           </div>
         </div>
 
-        <div className="flex items-center gap-1 rounded border border-surface-container-high bg-surface-container-lowest p-0.5">
+        <div data-element="layout-toggle-group" className="flex items-center gap-1 rounded border border-surface-container-high bg-surface-container-lowest p-0.5">
           {(
             [
               { value: 'grid', icon: 'grid_view', label: 'Grid view' },
@@ -61,6 +62,7 @@ function GridToolbar({
             <button
               key={option.value}
               type="button"
+              id={`browse-layout-${option.value}`}
               aria-label={option.label}
               aria-pressed={layout === option.value}
               onClick={() => onLayoutChange(option.value)}
@@ -85,6 +87,7 @@ function SkeletonGrid({ layout }: { layout: ProductLayout }) {
       {Array.from({ length: 8 }).map((_, index) => (
         <div
           key={index}
+          data-component="ProductSkeleton"
           className={`animate-pulse overflow-hidden rounded-lg border border-surface-container-high/60 bg-surface-container-lowest ${
             layout === 'list' ? 'sm:flex' : ''
           }`}
@@ -105,7 +108,7 @@ function EmptyState({ onResetFilters }: { onResetFilters?: () => void }) {
   const isFiltered = Boolean(onResetFilters)
 
   return (
-    <div className="col-span-full rounded-xl border border-dashed border-outline-variant bg-surface-container-lowest px-space-md py-space-xl text-center">
+    <div data-component="EmptyState" className="col-span-full rounded-xl border border-dashed border-outline-variant bg-surface-container-lowest px-space-md py-space-xl text-center">
       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-surface-container-low">
         <Icon name="inventory_2" className="text-[24px] text-on-surface-variant" />
       </div>
@@ -120,6 +123,7 @@ function EmptyState({ onResetFilters }: { onResetFilters?: () => void }) {
       {onResetFilters && (
         <button
           type="button"
+          id="browse-empty-reset-filters"
           onClick={onResetFilters}
           className="mt-space-md rounded-lg bg-primary-container px-space-lg py-2.5 font-label-technical text-label-technical uppercase tracking-wider text-on-primary transition-colors hover:bg-primary"
         >
@@ -152,7 +156,7 @@ export function ProductGrid({
   onResetFilters,
 }: ProductGridProps) {
   return (
-    <section aria-label="Product results" className="min-w-0">
+    <section id="browse-product-results" data-component="ProductGrid" aria-label="Product results" className="min-w-0">
       <GridToolbar
         shown={products.length}
         total={total}
@@ -163,6 +167,7 @@ export function ProductGrid({
       />
 
       <div
+        id="browse-product-grid"
         className={`grid gap-space-sm ${
           layout === 'list' ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
         }`}

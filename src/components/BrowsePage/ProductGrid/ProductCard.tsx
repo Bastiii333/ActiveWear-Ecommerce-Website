@@ -9,11 +9,13 @@ export function ProductCard({ product, layout = 'grid' }: { product: Product; la
 
   return (
     <article
+      data-component="ProductCard"
       className={`group overflow-hidden rounded-lg border border-surface-container-high/60 bg-surface-container-lowest shadow-sm transition-shadow hover:shadow-lg ${
         isList ? 'sm:flex' : ''
       }`}
     >
       <div
+        data-element="product-media"
         className={`relative overflow-hidden bg-surface-container-low ${
           isList ? 'aspect-[3/4] sm:aspect-square sm:w-52 sm:shrink-0' : 'aspect-[3/4]'
         }`}
@@ -23,22 +25,24 @@ export function ProductCard({ product, layout = 'grid' }: { product: Product; la
             src={product.image}
             alt={product.name}
             loading="lazy"
+            data-element="product-image"
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center">
+          <div data-element="product-image-placeholder" className="flex h-full w-full items-center justify-center">
             <Icon name="image" className="text-[32px] text-on-surface-variant/40" />
           </div>
         )}
 
         {product.featured && (
-          <span className="absolute left-3 top-3 rounded-sm bg-tertiary-container px-2 py-1 font-label-technical text-label-technical uppercase tracking-widest text-on-tertiary">
+          <span data-element="product-featured-badge" className="absolute left-3 top-3 rounded-sm bg-tertiary-container px-2 py-1 font-label-technical text-label-technical uppercase tracking-widest text-on-tertiary">
             Featured Tag
           </span>
         )}
 
         <button
           type="button"
+          data-element="product-wishlist-toggle"
           aria-pressed={liked}
           aria-label={liked ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
           onClick={() => setLiked((value) => !value)}
@@ -52,30 +56,30 @@ export function ProductCard({ product, layout = 'grid' }: { product: Product; la
         </button>
       </div>
 
-      <div className={`flex flex-col gap-1 p-space-sm ${isList ? 'sm:flex-1 sm:justify-center sm:p-space-md' : ''}`}>
-        <span className="font-label-technical text-label-technical uppercase tracking-widest text-outline">
+      <div data-element="product-details" className={`flex flex-col gap-1 p-space-sm ${isList ? 'sm:flex-1 sm:justify-center sm:p-space-md' : ''}`}>
+        <span data-element="product-category" className="font-label-technical text-label-technical uppercase tracking-widest text-outline">
           {product.category.replace('-', ' ')}
         </span>
 
         <div className="flex items-start justify-between gap-space-sm">
-          <h3 className="font-label-lg text-label-lg uppercase leading-tight text-on-surface">{product.name}</h3>
-          <span className="flex shrink-0 items-center gap-0.5">
+          <h3 data-element="product-name" className="font-label-lg text-label-lg uppercase leading-tight text-on-surface">{product.name}</h3>
+          <span data-element="product-rating" className="flex shrink-0 items-center gap-0.5">
             <Icon name="star" filled className="text-[14px] text-amber-400" />
             <span className="font-label-technical text-label-technical text-on-surface">{product.rating.toFixed(1)}</span>
           </span>
         </div>
 
-        <div className="flex items-baseline gap-2">
-          <span className="font-headline-sm text-headline-sm text-on-surface">{formatPrice(product.price)}</span>
+        <div data-element="product-price-block" className="flex items-baseline gap-2">
+          <span data-element="product-price" className="font-headline-sm text-headline-sm text-on-surface">{formatPrice(product.price)}</span>
           {product.compareAtPrice !== undefined && (
-            <span className="font-body-sm text-body-sm text-on-surface-variant line-through">
+            <span data-element="product-compare-price" className="font-body-sm text-body-sm text-on-surface-variant line-through">
               {formatPrice(product.compareAtPrice)}
             </span>
           )}
         </div>
 
         <div className="flex items-center justify-between gap-space-sm pt-0.5">
-          <span className="font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
+          <span data-element="product-sizes" className="font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
             {product.sizes.slice(0, 4).join(' / ')}
           </span>
           <span className="flex items-center gap-1">
@@ -83,6 +87,7 @@ export function ProductCard({ product, layout = 'grid' }: { product: Product; la
               <span
                 key={color.id}
                 title={color.name}
+                data-element="product-color-swatch"
                 style={{ backgroundColor: color.hex }}
                 className="h-3.5 w-3.5 rounded-full border border-outline-variant/70"
               />

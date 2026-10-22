@@ -30,11 +30,11 @@ export default function BrowsePage({ products = CATALOG_PRODUCTS, facets, isLoad
   const [layout, setLayout] = useState<ProductLayout>('grid')
 
   return (
-    <div className="bg-surface font-body-md text-on-surface antialiased">
+    <div id="browse-page" data-component="BrowsePage" className="bg-surface font-body-md text-on-surface antialiased">
       {/* shortcut: Header/Footer still live under LandingPage; promote them to components/layout once a router lands. */}
       <Header searchValue={catalog.filters.search} onSearchChange={catalog.setSearch} />
 
-      <main className="w-full bg-surface pt-[116px]">
+      <main id="browse-main" className="w-full bg-surface pt-[116px]">
         <CatalogHeader />
 
         <Container>
@@ -46,7 +46,7 @@ export default function BrowsePage({ products = CATALOG_PRODUCTS, facets, isLoad
         </Container>
 
         <Container className="py-space-lg">
-          <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-[280px_minmax(0,1fr)]">
+          <div data-element="browse-layout-grid" className="grid grid-cols-1 gap-space-lg lg:grid-cols-[280px_minmax(0,1fr)]">
             <FilterSidebar controller={catalog} facets={facets} />
             <ProductGrid
               products={products}

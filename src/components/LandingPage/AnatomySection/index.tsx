@@ -4,7 +4,7 @@ import { MATERIALS } from './data'
 // CardIcon
 function CardIcon({ name }: { name: string }) {
   return (
-    <div className="w-10 h-10 rounded-lg bg-surface-container-lowest text-tertiary-container flex items-center justify-center shadow-sm mb-space-md">
+    <div data-component="CardIcon" className="w-10 h-10 rounded-lg bg-surface-container-lowest text-tertiary-container flex items-center justify-center shadow-sm mb-space-md">
       <Icon name={name} />
     </div>
   )
@@ -13,7 +13,7 @@ function CardIcon({ name }: { name: string }) {
 // CircularLifecycleCard
 function CircularLifecycleCard() {
   return (
-    <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col justify-between shadow-sm">
+    <div data-component="CircularLifecycleCard" className="bg-surface-container-low p-space-lg rounded-xl flex flex-col justify-between shadow-sm">
       <div>
         <CardIcon name="all_inclusive" />
         <h3 className="font-headline-sm text-headline-sm text-on-surface uppercase mb-space-xs">Circular Lifecycle</h3>
@@ -25,13 +25,13 @@ function CircularLifecycleCard() {
 
       <div className="mt-space-lg space-y-space-sm bg-surface-container-lowest p-space-md rounded-lg">
         {MATERIALS.map((m, i) => (
-          <div key={m.label} className={i > 0 ? 'pt-space-xs' : ''}>
+          <div key={m.label} data-element="material-row" className={i > 0 ? 'pt-space-xs' : ''}>
             <div className="flex items-center justify-between text-on-surface mb-space-sm">
               <span className="font-label-technical text-label-technical uppercase">{m.label}</span>
               <span className="font-label-technical text-label-technical font-bold text-tertiary-container">{m.pct}%</span>
             </div>
             <div className="w-full h-2 bg-surface-container-low rounded-full overflow-hidden">
-              <div className="h-full bg-tertiary-container rounded-full" style={{ width: `${m.pct}%` }} />
+              <div data-element="material-bar" className="h-full bg-tertiary-container rounded-full" style={{ width: `${m.pct}%` }} />
             </div>
           </div>
         ))}
@@ -43,7 +43,7 @@ function CircularLifecycleCard() {
 // HydroGlideCard
 function HydroGlideCard() {
   return (
-    <div className="relative bg-surface-container-low rounded-xl overflow-hidden shadow-sm flex flex-col justify-end p-space-lg group min-h-[360px]">
+    <div data-component="HydroGlideCard" className="relative bg-surface-container-low rounded-xl overflow-hidden shadow-sm flex flex-col justify-end p-space-lg group min-h-[360px]">
       <img
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         alt="Macro shot of waterproof stretch yarn with water droplets beading"
@@ -52,7 +52,7 @@ function HydroGlideCard() {
       <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
 
       <div className="relative z-10 text-on-primary space-y-space-xs">
-        <span className="inline-block font-label-technical text-label-technical uppercase tracking-wider text-tertiary-fixed bg-tertiary-container/80 px-2 py-0.5 rounded backdrop-blur-sm">
+        <span data-element="hydroglide-badge" className="inline-block font-label-technical text-label-technical uppercase tracking-wider text-tertiary-fixed bg-tertiary-container/80 px-2 py-0.5 rounded backdrop-blur-sm">
           Nanotech Water Beading
         </span>
         <h3 className="font-headline-sm text-headline-sm uppercase">HydroGlide Matrix</h3>
@@ -68,7 +68,7 @@ function HydroGlideCard() {
 // ThermalCard
 function ThermalCard() {
   return (
-    <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col justify-between shadow-sm">
+    <div data-component="ThermalCard" className="bg-surface-container-low p-space-lg rounded-xl flex flex-col justify-between shadow-sm">
       <div>
         <CardIcon name="scatter_plot" />
         <h3 className="font-headline-sm text-headline-sm text-on-surface uppercase mb-space-xs">Thermal Gradient Mapping</h3>
@@ -80,6 +80,7 @@ function ThermalCard() {
 
       <div className="mt-space-lg bg-surface-container-lowest p-space-md rounded-lg flex items-center justify-center">
         <svg
+          data-element="thermal-chart"
           className="w-full h-32 text-tertiary-container"
           fill="none"
           viewBox="0 0 200 100"
@@ -103,21 +104,21 @@ function ThermalCard() {
 // AnatomySection
 export function AnatomySection() {
   return (
-    <section className="w-full bg-surface-container-lowest py-margin-md lg:py-margin-lg">
+    <section id="landing-anatomy" data-component="AnatomySection" className="w-full bg-surface-container-lowest py-margin-md lg:py-margin-lg">
       <Container>
-        <div className="text-center max-w-2xl mx-auto mb-space-xl">
+        <div data-element="section-header" className="text-center max-w-2xl mx-auto mb-space-xl">
           <span className="font-label-technical text-label-technical text-tertiary-container uppercase tracking-widest block mb-space-xs">
             Engineering Precision
           </span>
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-surface">
+          <h2 id="anatomy-heading" className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-surface">
             Anatomy of relentless movement
           </h2>
-          <p className="font-body-md text-body-md text-on-surface-variant mt-2">
+          <p data-element="anatomy-description" className="font-body-md text-body-md text-on-surface-variant mt-2">
             From micro-perforated sweat mapping to kinetic tensile recovery, every garment is an athletic instrument.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+        <div data-element="anatomy-grid" className="grid grid-cols-1 md:grid-cols-3 gap-space-md">
           <ThermalCard />
           <HydroGlideCard />
           <CircularLifecycleCard />

@@ -12,6 +12,8 @@ interface CategoryTabsProps {
 export function CategoryTabs({ active, counts, onChange }: CategoryTabsProps) {
   return (
     <div
+      id="browse-category-tabs"
+      data-component="CategoryTabs"
       role="group"
       aria-label="Product categories"
       className="grid grid-cols-2 gap-space-xs sm:grid-cols-3 lg:grid-cols-6"
@@ -24,6 +26,7 @@ export function CategoryTabs({ active, counts, onChange }: CategoryTabsProps) {
           <button
             key={tab.slug}
             type="button"
+            data-element="category-tab"
             aria-pressed={isActive}
             onClick={() => onChange(tab.slug)}
             className={`flex min-h-[92px] flex-col items-center justify-center gap-1 rounded-lg border px-space-xs py-space-sm text-center transition-colors ${
@@ -33,9 +36,10 @@ export function CategoryTabs({ active, counts, onChange }: CategoryTabsProps) {
             }`}
           >
             <Icon name={tab.icon} className="text-[22px]" />
-            <span className="font-label-technical text-label-technical uppercase tracking-widest">{tab.label}</span>
+            <span data-element="category-tab-label" className="font-label-technical text-label-technical uppercase tracking-widest">{tab.label}</span>
             {typeof count === 'number' && (
               <span
+                data-element="category-tab-count"
                 className={`font-label-technical text-label-technical ${
                   isActive ? 'text-on-primary/60' : 'text-outline'
                 }`}
