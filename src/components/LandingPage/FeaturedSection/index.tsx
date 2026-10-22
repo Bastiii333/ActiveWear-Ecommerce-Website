@@ -18,24 +18,24 @@ function ProductDetails({ product }: { product: Spotlight }) {
   }
 
   return (
-    <div className="lg:col-span-6 space-y-space-md">
+    <div data-component="ProductDetails" className="lg:col-span-6 space-y-space-md">
       <div>
-        <div className="font-label-technical text-label-technical text-on-tertiary-container uppercase tracking-widest">
+        <div data-element="product-eyebrow" className="font-label-technical text-label-technical text-on-tertiary-container uppercase tracking-widest">
           AeroLab Series 04 • Men &amp; Women
         </div>
-        <h3 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-primary uppercase mt-1">
+        <h3 id="featured-product-title" className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-primary uppercase mt-1">
           {product.title}
         </h3>
-        <div className="flex flex-wrap items-center gap-space-sm mt-2">
-          <span className="font-headline-md text-headline-md font-bold text-on-primary">₱{product.price.toFixed(2)}</span>
-          <span className="font-body-sm text-body-sm text-on-primary-container line-through">₱{product.oldPrice.toFixed(2)}</span>
-          <span className="bg-tertiary-container text-on-tertiary text-label-technical font-label-technical px-2 py-0.5 rounded uppercase">
+        <div data-element="product-price-block" className="flex flex-wrap items-center gap-space-sm mt-2">
+          <span data-element="product-price" className="font-headline-md text-headline-md font-bold text-on-primary">₱{product.price.toFixed(2)}</span>
+          <span data-element="product-old-price" className="font-body-sm text-body-sm text-on-primary-container line-through">₱{product.oldPrice.toFixed(2)}</span>
+          <span data-element="product-save-badge" className="bg-tertiary-container text-on-tertiary text-label-technical font-label-technical px-2 py-0.5 rounded uppercase">
             Save {save}%
           </span>
         </div>
       </div>
 
-      <p className="font-body-md text-body-md text-on-primary-container">{product.desc}</p>
+      <p data-element="product-description" className="font-body-md text-body-md text-on-primary-container">{product.desc}</p>
 
       <SwatchPicker selected={swatch} onChange={setSwatch} />
       <SizePicker selected={size} onChange={setSize} />
@@ -65,17 +65,17 @@ const arrowBtn =
 
 function ProductGallery({ product, index, total, onStep }: ProductGalleryProps) {
   return (
-    <div className="lg:col-span-6 relative">
-      <div className="relative w-full aspect-square bg-surface-container-lowest rounded-xl overflow-hidden p-space-md shadow-inner flex items-center justify-center">
-        <img key={product.image + index} className="w-full h-full object-contain" alt={product.title} src={product.image} />
+    <div data-component="ProductGallery" className="lg:col-span-6 relative">
+      <div data-element="gallery-viewport" className="relative w-full aspect-square bg-surface-container-lowest rounded-xl overflow-hidden p-space-md shadow-inner flex items-center justify-center">
+        <img key={product.image + index} data-element="featured-product-image" className="w-full h-full object-contain" alt={product.title} src={product.image} />
 
-        <div className="absolute top-4 left-4 bg-tertiary-container text-on-tertiary px-3 py-1 rounded-full font-label-technical text-label-technical uppercase tracking-widest font-bold">
+        <div data-element="product-grade-badge" className="absolute top-4 left-4 bg-tertiary-container text-on-tertiary px-3 py-1 rounded-full font-label-technical text-label-technical uppercase tracking-widest font-bold">
           {product.grade}
         </div>
 
-        <div className="absolute bottom-4 left-4 right-4 bg-surface/90 backdrop-blur-md py-space-xs px-space-sm rounded-lg flex justify-between items-center text-on-surface">
+        <div data-element="gallery-spec-bar" className="absolute bottom-4 left-4 right-4 bg-surface/90 backdrop-blur-md py-space-xs px-space-sm rounded-lg flex justify-between items-center text-on-surface">
           {[product.specA, product.specB].map((spec) => (
-            <span key={spec.label} className="font-label-technical text-label-technical uppercase tracking-wider flex items-center gap-1">
+            <span key={spec.label} data-element="gallery-spec" className="font-label-technical text-label-technical uppercase tracking-wider flex items-center gap-1">
               <Icon name={spec.icon} className="text-[16px] text-tertiary-container" /> {spec.label}
             </span>
           ))}
@@ -84,14 +84,14 @@ function ProductGallery({ product, index, total, onStep }: ProductGalleryProps) 
 
       <div className="flex items-center justify-between mt-space-md px-space-xs">
         <div className="flex items-center gap-space-xs">
-          <button aria-label="Previous product" onClick={() => onStep(-1)} className={arrowBtn}>
+          <button aria-label="Previous product" id="featured-gallery-prev" onClick={() => onStep(-1)} className={arrowBtn}>
             <Icon name="arrow_back" />
           </button>
-          <button aria-label="Next product" onClick={() => onStep(1)} className={arrowBtn}>
+          <button aria-label="Next product" id="featured-gallery-next" onClick={() => onStep(1)} className={arrowBtn}>
             <Icon name="arrow_forward" />
           </button>
         </div>
-        <div className="flex items-center gap-1.5 font-label-technical text-label-technical text-on-primary-container">
+        <div data-element="gallery-counter" className="flex items-center gap-1.5 font-label-technical text-label-technical text-on-primary-container">
           <span className="text-on-primary font-bold">{pad(index + 1)}</span> / <span>{pad(total)} INNOVATIONS</span>
         </div>
       </div>
@@ -111,8 +111,9 @@ interface PurchaseActionsProps {
 function PurchaseActions({ price, added, liked, onAdd, onToggleLike }: PurchaseActionsProps) {
   return (
     <>
-      <div className="pt-space-md flex flex-col sm:flex-row items-center gap-space-sm">
+      <div data-component="PurchaseActions" className="pt-space-md flex flex-col sm:flex-row items-center gap-space-sm">
         <button
+          id="featured-add-to-bag"
           onClick={onAdd}
           className={`w-full sm:flex-1 font-label-lg text-label-lg py-4 rounded-lg shadow-lg flex items-center justify-center gap-space-xs transition-all active:scale-[0.99] ${
             added ? 'bg-tertiary-container text-on-tertiary' : 'bg-surface-container-lowest text-primary hover:bg-surface-bright'
@@ -123,6 +124,7 @@ function PurchaseActions({ price, added, liked, onAdd, onToggleLike }: PurchaseA
         </button>
         <button
           aria-label="Add to Wishlist"
+          id="featured-wishlist-toggle"
           aria-pressed={liked}
           onClick={onToggleLike}
           className="w-full sm:w-auto p-4 rounded-lg bg-surface-container-lowest/10 hover:bg-surface-container-lowest/20 text-on-primary flex items-center justify-center transition-colors"
@@ -131,7 +133,7 @@ function PurchaseActions({ price, added, liked, onAdd, onToggleLike }: PurchaseA
         </button>
       </div>
 
-      <div className="flex flex-wrap items-center gap-space-md pt-space-xs text-on-primary-container font-label-technical text-label-technical">
+      <div data-element="purchase-perks" className="flex flex-wrap items-center gap-space-md pt-space-xs text-on-primary-container font-label-technical text-label-technical">
         <div className="flex items-center gap-1">
           <Icon name="local_shipping" className="text-[16px] text-on-tertiary-container" />
           <span>Free Express Shipping</span>
@@ -153,12 +155,12 @@ interface SizePickerProps {
 
 function SizePicker({ selected, onChange }: SizePickerProps) {
   return (
-    <div className="space-y-space-xs pt-space-xs">
+    <div data-component="SizePicker" className="space-y-space-xs pt-space-xs">
       <div className="flex justify-between items-center">
         <span className="font-label-technical text-label-technical uppercase tracking-wider text-on-primary-container">
           Athlete Sizing Matrix
         </span>
-        <button className="font-label-technical text-label-technical text-on-tertiary-container hover:underline uppercase tracking-wider">
+        <button id="featured-size-guide-button" className="font-label-technical text-label-technical text-on-tertiary-container hover:underline uppercase tracking-wider">
           Size Guide &amp; Fit
         </button>
       </div>
@@ -166,6 +168,7 @@ function SizePicker({ selected, onChange }: SizePickerProps) {
         {SIZES.map((s) => (
           <button
             key={s}
+            data-element="product-size-option"
             aria-pressed={selected === s}
             onClick={() => onChange(s)}
             className={`py-2.5 rounded font-label-md text-label-md uppercase transition-all ${
@@ -190,11 +193,12 @@ interface SpotlightTabsProps {
 
 function SpotlightTabs({ active, onChange }: SpotlightTabsProps) {
   return (
-    <div className="inline-flex p-1 bg-surface-container-lowest rounded-xl shadow-sm gap-1" role="tablist">
+    <div data-component="SpotlightTabs" className="inline-flex p-1 bg-surface-container-lowest rounded-xl shadow-sm gap-1" role="tablist">
       {SPOTLIGHT_TABS.map((t, i) => (
         <button
           key={t}
           role="tab"
+          data-element="spotlight-tab"
           aria-selected={active === i}
           onClick={() => onChange(i)}
           className={`px-space-md py-2 rounded-lg font-label-lg text-label-lg transition-all ${
@@ -216,18 +220,19 @@ interface SwatchPickerProps {
 
 function SwatchPicker({ selected, onChange }: SwatchPickerProps) {
   return (
-    <div className="space-y-space-xs pt-space-xs">
+    <div data-component="SwatchPicker" className="space-y-space-xs pt-space-xs">
       <div className="flex justify-between items-center">
         <span className="font-label-technical text-label-technical uppercase tracking-wider text-on-primary-container">
           Selected Palette:
         </span>
-        <span className="font-label-technical text-label-technical text-on-primary uppercase">{SWATCHES[selected].name}</span>
+        <span data-element="selected-swatch-name" className="font-label-technical text-label-technical text-on-primary uppercase">{SWATCHES[selected].name}</span>
       </div>
       <div className="flex items-center gap-space-sm">
         {SWATCHES.map((s, i) => (
           <button
             key={s.name}
             aria-label={s.name}
+            data-element="product-swatch"
             aria-pressed={selected === i}
             onClick={() => onChange(i)}
             style={{ backgroundColor: s.hex }}
@@ -258,19 +263,19 @@ export function FeaturedSection() {
   }
 
   return (
-    <section id="featured-spotlight" className="w-full bg-surface-container-low py-margin-md lg:py-margin-lg">
+    <section id="featured-spotlight" data-component="FeaturedSection" className="w-full bg-surface-container-low py-margin-md lg:py-margin-lg">
       <Container>
-        <div className="flex flex-col items-center mb-space-xl text-center">
+        <div data-element="section-header" className="flex flex-col items-center mb-space-xl text-center">
           <span className="font-label-technical text-label-technical uppercase tracking-widest text-on-surface-variant mb-space-xs">
             Curated Release
           </span>
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-surface mb-space-md">
+          <h2 id="featured-heading" className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-surface mb-space-md">
             Flagship Innovation Spotlight
           </h2>
           <SpotlightTabs active={tab} onChange={changeTab} />
         </div>
 
-        <div className="bg-primary-container text-on-primary rounded-xl overflow-hidden shadow-2xl p-space-md md:p-space-xl">
+        <div id="featured-spotlight-panel" className="bg-primary-container text-on-primary rounded-xl overflow-hidden shadow-2xl p-space-md md:p-space-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
             <ProductGallery product={product} index={index} total={total} onStep={step} />
             {/* key resets swatch / size / cart state when the product changes */}

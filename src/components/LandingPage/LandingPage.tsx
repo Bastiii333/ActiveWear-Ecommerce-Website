@@ -8,10 +8,10 @@ import { Footer } from "./Footer";
 
 export default function LandingPage() {
   return (
-    <div className="bg-surface font-body-md text-on-surface antialiased">
-      <Header />
-      {/* pt = announcement bar (~36px) + header (80px) */}
-      <main className="w-full pt-[116px] bg-surface">
+    <div id="landing-page" data-component="LandingPage" className="bg-surface font-body-md text-on-surface antialiased">
+      <Header variant="overlay" />
+      {/* The overlay header sits on the hero, so the main column starts at the top. */}
+      <main id="landing-main" className="w-full bg-surface">
         <HeroSection />
         <FeaturedSection />
         <DivisionsSection />

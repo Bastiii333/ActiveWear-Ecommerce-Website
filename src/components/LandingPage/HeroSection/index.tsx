@@ -1,78 +1,63 @@
-import { Icon, StatusDot, IMAGES, Container } from '../shared'
-import { HERO_METRICS } from './data'
+import { useEffect, useRef } from 'react'
+import { Icon } from '../shared'
+import heroVideo from '../../../assets/video/headerVideo.mp4'
+
+// HeroVideo
+function HeroVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // Autoplay is decorative; respect users who asked the OS to reduce motion.
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    const sync = () => {
+      const video = videoRef.current
+      if (!video) return
+      if (media.matches) video.pause()
+      else void video.play().catch(() => {})
+    }
+
+    sync()
+    media.addEventListener('change', sync)
+    return () => media.removeEventListener('change', sync)
+  }, [])
+
+  return (
+    <video
+      ref={videoRef}
+      data-element="hero-video"
+      className="absolute inset-0 h-full w-full object-cover"
+      src={heroVideo}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      aria-hidden="true"
+      tabIndex={-1}
+    />
+  )
+}
 
 // HeroContent
 function HeroContent() {
   return (
-    <div className="lg:col-span-7 space-y-space-lg">
-      <div className="inline-flex items-center gap-space-xs bg-surface-container-low px-space-md py-1 rounded-full shadow-sm">
-        <StatusDot />
-        <span className="font-label-technical text-label-technical text-on-surface uppercase tracking-wider">
-          Spring/Summer Lab Drop • Series 04
-        </span>
-      </div>
-
-      <div className="space-y-space-xs">
-        <h1 className="font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface uppercase">
-          Move With
-          <br />
-          <span className="text-tertiary-container">Confidence</span>
-        </h1>
-        <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl pt-space-xs">
-          Engineered for relentless motion, sculpted for everyday endurance. Explore our high-performance technical
-          silhouettes designed to transcend physical limits.
-        </p>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-space-md pt-space-xs">
-        <a
-          href="#"
-          className="inline-flex items-center justify-center gap-space-xs bg-primary-container text-on-primary hover:bg-primary font-label-lg text-label-lg px-space-xl py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
-        >
-          <span>Shop New Collection</span>
-          <Icon name="arrow_forward" className="text-[18px]" />
-        </a>
-        <a
-          href="#featured-spotlight"
-          className="inline-flex items-center justify-center gap-space-xs bg-surface-container-lowest text-primary-container font-label-lg text-label-lg px-space-lg py-3.5 rounded-lg shadow-sm hover:bg-surface-container-low transition-all"
-        >
-          <Icon name="biotech" className="text-[18px]" />
-          <span>Explore Technology</span>
-        </a>
-      </div>
-
-      <HeroMetrics />
-    </div>
-  )
-}
-
-// HeroMetrics
-function HeroMetrics() {
-  return (
-    <div className="pt-space-md grid grid-cols-3 gap-space-md max-w-lg bg-surface-container-low/70 p-space-md rounded-xl backdrop-blur-sm">
-      {HERO_METRICS.map((m) => (
-        <div key={m.label}>
-          <div className={`font-headline-md text-headline-md font-bold tracking-tight ${m.accent ? 'text-tertiary-container' : 'text-on-surface'}`}>
-            {m.value}
-          </div>
-          <div className="font-label-technical text-label-technical text-on-surface-variant uppercase tracking-wider mt-0.5">
-            {m.label}
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-}
-
-// HeroVisual
-function HeroVisual() {
-  return (
-    <div className="flex-shrink-0 ">
-      <img
-        src={IMAGES.heromodel}
-        alt="Hero Model"
-        className="w-140 h-auto object-cover "
-      />
+    <div data-component="HeroContent" className="max-w-2xl space-y-space-md">
+      <h1 id="hero-heading" className="font-display-hero text-display-hero-mobile md:text-display-hero text-white uppercase text-balance">
+        Move With Confidence
+      </h1>
+      <p id="hero-description" className="font-body-md text-body-md md:text-body-lg text-white/85 max-w-md">
+        Engineered for relentless motion, sculpted for everyday endurance. Explore our high-performance technical
+        silhouettes designed to transcend physical limits.
+      </p>
+      <a
+        href="#/shop"
+        id="hero-shop-cta"
+        className="inline-flex items-center gap-space-xs rounded-full bg-white px-space-lg py-3 font-label-lg text-label-lg text-primary uppercase tracking-wider transition-colors hover:bg-white/85 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+      >
+        <span>Shop New Collection</span>
+        <Icon name="arrow_forward" className="text-[18px]" />
+      </a>
     </div>
   )
 }
@@ -80,19 +65,20 @@ function HeroVisual() {
 // HeroSection
 export function HeroSection() {
   return (
-    <section className="w-full bg-surface-container-lowest bg-no-repeat overflow-hidden flex flex-row items-center justify-center">
-      {/* decorative glows */}
-      
-      {/* <div className="absolute top-1/2 -left-36 w-[500px] h-[500px] bg-surface-container-high/60 rounded-full blur-2xl pointer-events-none" /> */}
-
-        <div className="p-20"> 
-          <HeroContent />
-        </div>
-           
-        <div className="hidden xl:block">
-          <HeroVisual />
-        </div>
-
+    <section
+      id="landing-hero"
+      data-component="HeroSection"
+      className="relative isolate flex min-h-[100svh] w-full items-center overflow-hidden bg-primary"
+    >
+      <HeroVideo />
+      <div
+        data-element="hero-scrim"
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/25 to-transparent"
+      />
+      <div className="relative z-10 w-full px-5 pb-16 pt-[116px] md:px-8 xl:px-10">
+        <HeroContent />
+      </div>
     </section>
   )
 }
