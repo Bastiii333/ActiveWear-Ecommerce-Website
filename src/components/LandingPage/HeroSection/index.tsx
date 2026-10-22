@@ -1,4 +1,4 @@
-import { Icon, StatusDot, IMAGES, Container } from '../shared'
+import { Icon, StatusDot, IMAGES } from '../shared'
 import { HERO_METRICS } from './data'
 
 // HeroContent
