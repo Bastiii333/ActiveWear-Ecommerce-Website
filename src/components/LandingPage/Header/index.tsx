@@ -1,10 +1,11 @@
+import { useState } from 'react'
 import { Icon, IMAGES, Container } from '../shared'
 import { NAV_LINKS, ANNOUNCEMENT } from './data'
 
 // AnnouncementBar
 function AnnouncementBar() {
   return (
-    <div className="w-full bg-primary text-on-primary py-space-xs px-gutter-sm text-center font-label-technical text-label-technical tracking-widest uppercase">
+    <div id="site-announcement-bar" data-component="AnnouncementBar" className="w-full bg-primary text-on-primary py-space-xs px-gutter-sm text-center font-label-technical text-label-technical tracking-widest uppercase">
       {ANNOUNCEMENT}
     </div>
   )
@@ -16,21 +17,21 @@ const badgeBase =
 
 function HeaderActions() {
   return (
-    <div className="flex items-center gap-space-sm shrink-0">
-      <button aria-label="Search" className="lg:hidden p-space-xs text-on-surface-variant hover:text-on-surface">
+    <div data-component="HeaderActions" className="flex items-center gap-space-sm shrink-0">
+      <button aria-label="Search" id="site-mobile-search-button" className="lg:hidden p-space-xs text-on-surface-variant hover:text-on-surface">
         <Icon name="search"  />
       </button>
-      <a href="#" aria-label="Wishlist" className="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
+      <a href="#" aria-label="Wishlist" id="site-wishlist-link" className="relative hidden sm:inline-flex p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
         <Icon name="favorite" />
         {/* Display a badge conditionally and dynamically later on*/}
-        <span className={`${badgeBase} bg-primary text-on-primary`}>0</span>
+        <span data-element="wishlist-count-badge" className={`${badgeBase} bg-primary text-on-primary`}>0</span>
       </a>
-      <a href="#" aria-label="Cart" className="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
+      <a href="#" aria-label="Cart" id="site-cart-link" className="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors">
         <Icon name="shopping_bag" />
          {/* Display a badge conditionally and dynamically later on*/}
-        <span className={`${badgeBase} bg-tertiary-container text-on-tertiary font-bold`}>2</span>
+        <span data-element="cart-count-badge" className={`${badgeBase} bg-tertiary-container text-on-tertiary font-bold`}>2</span>
       </a>
-      <a href="#" aria-label="Account" className="p-space-xs transition-opacity hover:opacity-90 ml-space-xs">
+      <a href="#" aria-label="Account" id="site-account-link" className="p-space-xs transition-opacity hover:opacity-90 ml-space-xs">
         <img alt="Profile" className="w-8 h-8 rounded-full object-cover" src={IMAGES.profile} />
       </a>
     </div>
@@ -40,26 +41,29 @@ function HeaderActions() {
 // Logo
 function Logo() {
   return (
-    <a href="#" className="flex items-center gap-space-sm shrink-0">
-      <img alt="ActiveWear Brand Logo" className="h-12 w-auto object-contain" src={IMAGES.logo} />
+    <a href="#" id="site-logo-link" data-component="Logo" className="flex items-center gap-space-sm shrink-0">
+      <img alt="ActiveWear Brand Logo" className="h-9 md:h-12 w-auto object-contain" src={IMAGES.logo} />
     </a>
   )
 }
 
 // NavLinks
 function NavLinks() {
+  const isShop = window.location.hash.startsWith('#/shop')
+
   return (
-    <nav className="hidden xl:flex items-center gap-space-lg" aria-label="Primary">
+    <nav id="site-primary-nav" data-component="NavLinks" className="hidden xl:flex items-center gap-space-lg" aria-label="Primary">
       {NAV_LINKS.map((link, i) => (
         <a
-          key={link}
-          href="#"
-          aria-current={i === 0 ? 'page' : undefined}
+          key={link.label}
+          href={link.href}
+          data-element="primary-nav-link"
+          aria-current={isShop && link.href === '#/shop' ? 'page' : undefined}
           className={`font-label-lg text-label-lg uppercase tracking-wider transition-colors ${
             i === 0 ? 'text-on-surface font-bold' : 'text-on-surface-variant hover:text-on-surface'
           }`}
         >
-          {link}
+          {link.label}
         </a>
       ))}
     </nav>
@@ -67,12 +71,28 @@ function NavLinks() {
 }
 
 // SearchBox
-function SearchBox() {
+interface SearchBoxProps {
+  value?: string
+  onChange?: (value: string) => void
+}
+
+function SearchBox({ value, onChange }: SearchBoxProps) {
+  const [draft, setDraft] = useState('')
+  const current = value ?? draft
+
+  const update = (next: string) => {
+    if (onChange) onChange(next)
+    else setDraft(next)
+  }
+
   return (
-    <div className="relative hidden lg:flex items-center w-full max-w-xs bg-surface-container-low rounded-lg px-space-sm py-space-xs">
+    <div data-component="SearchBox" className="relative hidden lg:flex items-center w-full max-w-xs bg-surface-container-low rounded-lg px-space-sm py-space-xs">
       <Icon name="search" className="text-on-surface-variant text-[20px] mr-space-xs" />
       <input
         type="text"
+        id="site-search-input"
+        value={current}
+        onChange={(event) => update(event.target.value)}
         placeholder="Search gear, apparel..."
         aria-label="Search"
         className="bg-transparent w-full text-on-surface font-body-sm text-body-sm focus:outline-none placeholder:text-on-surface-variant/60"
@@ -85,16 +105,21 @@ function SearchBox() {
 }
 
 // Header
-export function Header() {
+interface HeaderProps {
+  searchValue?: string
+  onSearchChange?: (value: string) => void
+}
+
+export function Header({ searchValue, onSearchChange }: HeaderProps = {}) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header id="site-header" data-component="Header" className="fixed top-0 left-0 right-0 z-50">
       <AnnouncementBar />
-      <div className="h-20 w-full bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+      <div data-element="header-bar" className="h-20 w-full bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
         <Container className="h-full flex items-center justify-between gap-space-lg">
           <Logo />
           <NavLinks />
           <div className="flex items-center gap-space-md flex-1 max-w-md justify-end">
-            <SearchBox />
+            <SearchBox value={searchValue} onChange={onSearchChange} />
             <HeaderActions />
           </div>
         </Container>
