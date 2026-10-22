@@ -1,7 +1,7 @@
 import { Icon, StatusDot, Container } from '../shared'
 import { useState } from 'react'
 import { DISCIPLINES, DIVISIONS } from './data'
-import type { DivisionMetric, Division } from './types'
+import type { Division } from './types'
 
 // DisciplineFilter
 interface DisciplineFilterProps {
