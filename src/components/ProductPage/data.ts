@@ -24,7 +24,7 @@ export const PRODUCT: ProductDetail = {
   price: 118,
   compareAtPrice: 148,
   rating: 4.9,
-  reviewCount: 251,
+  reviewCount: 184,
   inStock: true,
   shipsIn: 'Ships in 1-2 business days',
   breadcrumbs: [
@@ -153,20 +153,16 @@ export const BUNDLE: BundleOffer = {
 /** Aggregates from `GET /api/products/:slug/reviews/summary`. */
 export const REVIEW_SUMMARY: ReviewSummary = {
   average: 4.9,
-  total: 251,
-  verifiedTotal: 238,
+  total: 184,
+  verifiedTotal: 184,
   recommendPercent: 96,
+  withPhotosCount: 42,
   bars: [
-    { stars: 5, count: 206 },
-    { stars: 4, count: 31 },
-    { stars: 3, count: 9 },
-    { stars: 2, count: 3 },
-    { stars: 1, count: 2 },
-  ],
-  metrics: [
-    { label: 'Fit', score: 4.8, max: 5, caption: 'Runs true to size' },
-    { label: 'Quality', score: 4.9, max: 5, caption: 'Holds up past 40 washes' },
-    { label: 'Value', score: 4.6, max: 5, caption: 'Worth the series premium' },
+    { stars: 5, count: 162 },
+    { stars: 4, count: 15 },
+    { stars: 3, count: 4 },
+    { stars: 2, count: 2 },
+    { stars: 1, count: 1 },
   ],
 }
 
@@ -179,6 +175,7 @@ export const REVIEWS: Review[] = [
     body:
       'Wore this through four weeks of marathon build in heavy humidity and the lattice panels genuinely move air. Came out of a 10k tempo soaked through but the collar never chafed and the fabric was dry by the time I finished my cooldown. The reflective piping is brighter than the photos suggest.',
     createdAt: '2026-09-28',
+    discipline: 'running',
     author: {
       id: 'ath-1041',
       name: 'Marco D.',
@@ -206,6 +203,7 @@ export const REVIEWS: Review[] = [
     body:
       'Best cut top I own — the taper is clean without being restrictive and the thumbholes finally sit right. One gripe: the zip pull is small enough that it is fiddly with gloves on. Dropping a star for that alone, everything else is excellent.',
     createdAt: '2026-09-14',
+    discipline: 'trail-hiking',
     author: {
       id: 'ath-1038',
       name: 'Rhea S.',
@@ -235,6 +233,7 @@ export const REVIEWS: Review[] = [
     body:
       'Bought this as a mid layer for cold morning rides and it has outperformed a shell twice the price. It packs down to nothing and the wind simply does not get through the collar. Sized up to L for the layering room and that was the right call.',
     createdAt: '2026-08-30',
+    discipline: 'training',
     author: {
       id: 'ath-1032',
       name: 'Jonas V.',
@@ -257,6 +256,7 @@ export const REVIEWS: Review[] = [
     body:
       'Forty-plus washes on my first and the DWR finish is still beading. At this point I just buy a new colourway every season and retire the oldest to easy days.',
     createdAt: '2026-08-11',
+    discipline: 'training',
     author: {
       id: 'ath-1027',
       name: 'Priya N.',
@@ -279,6 +279,7 @@ export const REVIEWS: Review[] = [
     body:
       'No complaints about the material, but the sleeve length on the M is cut for longer arms than mine. The thumbholes end up bunching at the wrist. Worth trying in store first if you can.',
     createdAt: '2026-07-22',
+    discipline: 'running',
     author: {
       id: 'ath-1019',
       name: 'Tomas L.',
@@ -296,15 +297,14 @@ export const REVIEWS: Review[] = [
   },
 ]
 
-export const REVIEW_FILTERS: { key: ReviewFilterKey; label: string }[] = [
-  { key: 'all', label: 'All Reviews' },
-  { key: 'with-photos', label: 'With Photos' },
-  { key: 'verified', label: 'Verified Buyers' },
+/** `count` names the summary field the chip shows in brackets, when it shows one. */
+export const REVIEW_FILTERS: { key: ReviewFilterKey; label: string; count?: 'total' | 'withPhotosCount' }[] = [
+  { key: 'all', label: 'All', count: 'total' },
+  { key: 'with-photos', label: 'With Photos', count: 'withPhotosCount' },
+  { key: 'running', label: 'Running' },
+  { key: 'training', label: 'Training' },
+  { key: 'trail-hiking', label: 'Trail & Hiking' },
   { key: '5', label: '5 Stars' },
-  { key: '4', label: '4 Stars' },
-  { key: '3', label: '3 Stars' },
-  { key: '2', label: '2 Stars' },
-  { key: '1', label: '1 Star' },
 ]
 
 export const REVIEW_SORTS: { key: ReviewSortKey; label: string }[] = [

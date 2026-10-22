@@ -8,6 +8,8 @@ import { ReviewToolbar } from './ReviewToolbar'
 interface ReviewsProps {
   reviews: Review[]
   summary: ReviewSummary
+  /** Named in the section intro. */
+  productName: string
   isLoading?: boolean
   onHelpful?: (reviewId: string) => void
   onWriteReview?: () => void
@@ -44,7 +46,14 @@ function LoadingRows() {
   )
 }
 
-export function Reviews({ reviews, summary, isLoading = false, onHelpful, onWriteReview }: ReviewsProps) {
+export function Reviews({
+  reviews,
+  summary,
+  productName,
+  isLoading = false,
+  onHelpful,
+  onWriteReview,
+}: ReviewsProps) {
   const controller = useReviewFilters(reviews)
   const activeStars = /^[1-5]$/.test(controller.filter) ? Number(controller.filter) : undefined
 
@@ -54,18 +63,18 @@ export function Reviews({ reviews, summary, isLoading = false, onHelpful, onWrit
   return (
     <section id="athlete-reviews" className="w-full bg-surface py-margin-md">
       <Container className="flex flex-col gap-space-lg">
-        <div className="flex flex-wrap items-end justify-between gap-space-md">
+        <div className="flex flex-wrap items-start justify-between gap-space-md">
           <div>
-            <span className="font-label-technical text-label-technical uppercase tracking-widest text-on-surface-variant">
-              Field tested
+            <span className="font-label-technical text-label-technical uppercase tracking-widest text-tertiary-container">
+              Athlete field reports
             </span>
-            <h2 className="font-headline-lg-mobile text-headline-lg-mobile uppercase text-on-surface md:font-headline-lg md:text-headline-lg">
-              Verified athlete reviews
+            <h2 className="font-headline-lg-mobile text-headline-lg-mobile text-on-surface md:font-headline-lg md:text-headline-lg">
+              Verified Athlete Reviews
             </h2>
           </div>
           <p className="max-w-sm font-body-sm text-body-sm text-on-surface-variant">
-            Every review below comes from a confirmed order. Ratings are collected 30 days after delivery, once the
-            kit has seen real training volume.
+            Real feedback from runners, lifters, and trail athletes who have tested the {productName} through every
+            season and session.
           </p>
         </div>
 
@@ -80,7 +89,7 @@ export function Reviews({ reviews, summary, isLoading = false, onHelpful, onWrit
           <ReviewToolbar
             filter={controller.filter}
             sort={controller.sort}
-            matchedCount={controller.matchedCount}
+            summary={summary}
             onFilterChange={controller.setFilter}
             onSortChange={controller.setSort}
           />

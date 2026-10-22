@@ -79,6 +79,7 @@ export default function ProductPage({
         <Reviews
           reviews={reviews}
           summary={reviewSummary}
+          productName={product.name}
           isLoading={isReviewsLoading}
           onHelpful={onHelpfulVote}
           onWriteReview={onWriteReview}

@@ -21,8 +21,10 @@ function matchesFilter(review: Review, filter: ReviewFilterKey): boolean {
       return true
     case 'with-photos':
       return review.photos.length > 0
-    case 'verified':
-      return review.author.verified
+    case 'running':
+    case 'training':
+    case 'trail-hiking':
+      return review.discipline === filter
     default:
       return review.rating === Number(filter)
   }

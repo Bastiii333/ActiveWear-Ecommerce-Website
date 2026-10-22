@@ -18,17 +18,24 @@ export function ReviewSummaryPanel({
 }: ReviewSummaryPanelProps) {
   return (
     <div className="grid grid-cols-1 gap-space-lg rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-space-md md:p-space-lg lg:grid-cols-12">
-      <div className="flex flex-col items-start gap-space-xs lg:col-span-3">
+      <div className="flex flex-col items-start gap-space-xs lg:col-span-4 lg:border-r lg:border-outline-variant/60 lg:pr-space-lg">
         <span className="flex items-baseline gap-1">
           <span className="font-display-hero-mobile text-display-hero-mobile text-on-surface">
             {summary.average.toFixed(1)}
           </span>
           <span className="font-body-md text-body-md text-on-surface-variant">/ 5</span>
         </span>
+
         <StarRating value={summary.average} size="text-[20px]" />
+
         <p className="font-body-sm text-body-sm text-on-surface-variant">
-          Based on {summary.total} reviews · {summary.verifiedTotal} verified buyers
+          Based on {summary.verifiedTotal} verified athlete reviews
         </p>
+
+        <span className="rounded-sm bg-tertiary-container/10 px-2 py-1 font-label-technical text-label-technical uppercase tracking-wider text-tertiary-container">
+          {summary.recommendPercent}% would recommend
+        </span>
+
         {/* placeholder: opens the review composer once submissions are wired. */}
         <button
           type="button"
@@ -39,7 +46,11 @@ export function ReviewSummaryPanel({
         </button>
       </div>
 
-      <div className="flex flex-col gap-space-xs lg:col-span-5">
+      <div className="flex flex-col gap-space-xs lg:col-span-8">
+        <span className="font-label-technical text-label-technical uppercase tracking-widest text-on-surface-variant">
+          Rating breakdown
+        </span>
+
         {summary.bars.map((bar) => {
           const percent = summary.total === 0 ? 0 : Math.round((bar.count / summary.total) * 100)
           const isActive = activeStars === bar.stars
@@ -52,49 +63,24 @@ export function ReviewSummaryPanel({
               onClick={() => onSelectStars(bar.stars)}
               className="group flex items-center gap-space-sm"
             >
-              <span className="flex w-10 shrink-0 items-center gap-0.5 font-label-technical text-label-technical text-on-surface-variant">
+              <span className="flex w-8 shrink-0 items-center gap-0.5 font-label-technical text-label-technical text-on-surface-variant">
                 {bar.stars}
                 <Icon name="star" filled className="text-[12px] text-amber-400" />
               </span>
-              <span className="h-2 flex-1 overflow-hidden rounded-full bg-surface-container-high">
+              <span className="h-2 flex-1 overflow-hidden rounded-full bg-tertiary-container/12">
                 <span
                   style={{ width: `${percent}%` }}
                   className={`block h-full rounded-full transition-colors ${
-                    isActive ? 'bg-tertiary-container' : 'bg-primary group-hover:bg-tertiary-container'
+                    isActive ? 'bg-primary' : 'bg-tertiary-container group-hover:bg-tertiary'
                   }`}
                 />
               </span>
-              <span className="w-10 shrink-0 text-right font-label-technical text-label-technical text-on-surface-variant">
+              <span className="w-8 shrink-0 text-right font-label-technical text-label-technical text-on-surface-variant">
                 {bar.count}
               </span>
             </button>
           )
         })}
-      </div>
-
-      <div className="flex flex-col gap-space-sm border-t border-outline-variant/60 pt-space-md lg:col-span-4 lg:border-l lg:border-t-0 lg:pl-space-lg lg:pt-0">
-        <p className="flex items-center gap-1 font-label-technical text-label-technical uppercase tracking-widest text-tertiary-container">
-          <Icon name="thumb_up" className="text-[16px]" />
-          {summary.recommendPercent}% would train in it again
-        </p>
-
-        {summary.metrics.map((metric) => (
-          <div key={metric.label} className="flex flex-col gap-1">
-            <div className="flex items-center justify-between font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
-              <span>{metric.label}</span>
-              <span className="text-on-surface">
-                {metric.score.toFixed(1)} / {metric.max}
-              </span>
-            </div>
-            <span className="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-high">
-              <span
-                style={{ width: `${(metric.score / metric.max) * 100}%` }}
-                className="block h-full rounded-full bg-primary"
-              />
-            </span>
-            <span className="font-body-sm text-body-sm text-on-surface-variant">{metric.caption}</span>
-          </div>
-        ))}
       </div>
     </div>
   )

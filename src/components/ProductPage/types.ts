@@ -8,8 +8,11 @@ export type SizeSlug = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'
 
 export type MediaKind = 'studio' | 'detail' | 'lifestyle'
 
-/** How a reviewer rated the fit. Feeds the "runs true to size" meter. */
+/** How a reviewer rated the fit. Shown as a chip on the review card. */
 export type FitFeedback = 'runs-small' | 'true-to-size' | 'runs-large'
+
+/** Training discipline a review is filed under. */
+export type DisciplineSlug = 'running' | 'training' | 'trail-hiking'
 
 export interface Breadcrumb {
   label: string
@@ -135,6 +138,8 @@ export interface Review {
   /** ISO 8601 date string. */
   createdAt: string
   author: ReviewAuthor
+  /** What the reviewer trains in. Drives the discipline filter chips. */
+  discipline: DisciplineSlug
   photos: ReviewPhoto[]
   helpfulCount: number
   size: SizeSlug
@@ -149,24 +154,17 @@ export interface RatingBar {
   count: number
 }
 
-/** A 0..max meter (fit, quality, value) shown beside the histogram. */
-export interface MetricScore {
-  label: string
-  score: number
-  max: number
-  caption: string
-}
-
 export interface ReviewSummary {
   average: number
   total: number
   verifiedTotal: number
   recommendPercent: number
+  /** Count behind the "With photos" chip; a page of rows cannot supply it. */
+  withPhotosCount: number
   bars: RatingBar[]
-  metrics: MetricScore[]
 }
 
-export type ReviewFilterKey = 'all' | 'with-photos' | 'verified' | '5' | '4' | '3' | '2' | '1'
+export type ReviewFilterKey = 'all' | 'with-photos' | DisciplineSlug | '5' | '4' | '3' | '2' | '1'
 
 export type ReviewSortKey = 'helpful' | 'recent' | 'rating-desc' | 'rating-asc'
 
