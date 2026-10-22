@@ -3,9 +3,9 @@ import { Icon, IMAGES, Container } from '../shared'
 import { NAV_LINKS, LANDING_NAV_LINKS, ANNOUNCEMENT } from './data'
 
 // AnnouncementBar
-function AnnouncementBar({ scrolled = false }: { scrolled?: boolean }) {
+function AnnouncementBar() {
   return (
-    <div id="site-announcement-bar" data-component="AnnouncementBar" className={`absolute inset-x-0 top-0 w-full bg-surface-container-lowest text-on-surface py-space-xs px-gutter-sm text-center font-label-technical text-label-technical tracking-widest uppercase transition-transform duration-300 motion-reduce:transition-none ${scrolled ? '-translate-y-full' : 'translate-y-0'}`}>
+    <div id="site-announcement-bar" data-component="AnnouncementBar" className="w-full bg-surface-container-lowest text-on-surface py-space-xs px-gutter-sm text-center font-label-technical text-label-technical tracking-widest uppercase">
       {ANNOUNCEMENT}
     </div>
   )
@@ -221,8 +221,13 @@ export function Header({ searchValue, onSearchChange, variant = 'default' }: Hea
       data-component="Header"
       className="fixed top-0 left-0 right-0 z-50"
     >
-      <AnnouncementBar scrolled={scrolled} />
-      <div data-element="header-bar" className={`group/bar relative top-6 h-20 w-full transition-transform duration-300 motion-reduce:transition-none ${scrolled ? '-translate-y-6' : 'translate-y-0'}`}>
+      {/* The bar sits in flow so a wrapped message pushes the nav down instead of being covered. The grid row collapses to 0 on scroll. */}
+      <div className={`grid transition-[grid-template-rows] duration-300 motion-reduce:transition-none ${scrolled ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]'}`}>
+        <div className="overflow-hidden">
+          <AnnouncementBar />
+        </div>
+      </div>
+      <div data-element="header-bar" className="group/bar relative h-20 w-full">
         {overlay ? (
           <>
             <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/15 to-transparent" />
