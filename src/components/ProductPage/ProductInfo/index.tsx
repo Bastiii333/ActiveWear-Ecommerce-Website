@@ -26,23 +26,38 @@ export function ProductInfo({ product, selection, reviewsHref = '#athlete-review
   const total = product.price * selection.quantity
 
   return (
-    <div className="lg:col-span-5">
-      <div className="flex flex-col gap-space-md rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-space-md shadow-sm md:p-space-lg">
+    <div id="product-info" data-component="ProductInfo" className="lg:col-span-5">
+      <div
+        data-element="product-info-card"
+        className="flex flex-col gap-space-md rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-space-md shadow-sm md:p-space-lg"
+      >
         <div className="flex items-start justify-between gap-space-sm">
-          <span className="font-label-technical text-label-technical uppercase tracking-widest text-tertiary-container">
+          <span
+            data-element="product-collection"
+            className="font-label-technical text-label-technical uppercase tracking-widest text-tertiary-container"
+          >
             {product.collection}
           </span>
-          <span className="flex shrink-0 items-center gap-1.5 font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
+          <span
+            data-element="product-stock-status"
+            className="flex shrink-0 items-center gap-1.5 font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant"
+          >
             <StatusDot className={product.inStock ? 'bg-tertiary-container' : 'bg-error'} />
             {product.inStock ? 'In stock' : 'Sold out'}
           </span>
         </div>
 
         <div className="space-y-space-xs">
-          <h1 className="font-headline-lg-mobile text-headline-lg-mobile uppercase text-on-surface md:font-headline-lg md:text-headline-lg">
+          <h1
+            id="product-title"
+            className="font-headline-lg-mobile text-headline-lg-mobile uppercase text-on-surface md:font-headline-lg md:text-headline-lg">
             {product.name}
           </h1>
-          <a href={reviewsHref} className="flex w-fit items-center gap-space-xs transition-opacity hover:opacity-80">
+          <a
+            id="product-reviews-link"
+            href={reviewsHref}
+            className="flex w-fit items-center gap-space-xs transition-opacity hover:opacity-80"
+          >
             <StarRating value={product.rating} />
             <span className="font-label-lg text-label-lg text-on-surface">{product.rating.toFixed(1)}</span>
             <span className="font-body-sm text-body-sm text-on-surface-variant underline underline-offset-2">
@@ -51,23 +66,28 @@ export function ProductInfo({ product, selection, reviewsHref = '#athlete-review
           </a>
         </div>
 
-        <div className="flex flex-wrap items-baseline gap-space-sm">
-          <span className="font-headline-md text-headline-md font-bold text-on-surface">
+        <div data-element="product-price-block" className="flex flex-wrap items-baseline gap-space-sm">
+          <span data-element="product-price-current" className="font-headline-md text-headline-md font-bold text-on-surface">
             {formatPrice(product.price, true)}
           </span>
           {product.compareAtPrice !== undefined && (
-            <span className="font-body-md text-body-md text-on-surface-variant line-through">
+            <span data-element="product-price-compare" className="font-body-md text-body-md text-on-surface-variant line-through">
               {formatPrice(product.compareAtPrice, true)}
             </span>
           )}
           {save !== undefined && (
-            <span className="rounded-sm bg-tertiary-container px-2 py-0.5 font-label-technical text-label-technical uppercase tracking-wider text-on-tertiary">
+            <span
+              data-element="product-save-badge"
+              className="rounded-sm bg-tertiary-container px-2 py-0.5 font-label-technical text-label-technical uppercase tracking-wider text-on-tertiary"
+            >
               Save {save}%
             </span>
           )}
         </div>
 
-        <p className="font-body-md text-body-md text-on-surface-variant">{product.summary}</p>
+        <p data-element="product-summary" className="font-body-md text-body-md text-on-surface-variant">
+          {product.summary}
+        </p>
 
         <ColorPicker colors={product.colors} selected={selection.colorId} onChange={selection.setColor} />
 
@@ -81,7 +101,10 @@ export function ProductInfo({ product, selection, reviewsHref = '#athlete-review
 
         <div className="flex flex-wrap items-center justify-between gap-space-sm">
           <QuantityStepper value={selection.quantity} onChange={selection.setQuantity} />
-          <span className="flex items-center gap-1 font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
+          <span
+            data-element="product-ships-in"
+            className="flex items-center gap-1 font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant"
+          >
             <Icon name="schedule" className="text-[16px]" />
             {product.shipsIn}
           </span>
@@ -90,6 +113,7 @@ export function ProductInfo({ product, selection, reviewsHref = '#athlete-review
         <div className="flex flex-col gap-space-sm">
           <div className="flex items-center gap-space-sm">
             <button
+              id="product-add-to-bag"
               type="button"
               onClick={selection.addToBag}
               className={`flex flex-1 items-center justify-center gap-space-xs rounded-lg py-4 font-label-lg text-label-lg uppercase tracking-wider shadow-lg transition-all active:scale-[0.99] ${
@@ -100,6 +124,7 @@ export function ProductInfo({ product, selection, reviewsHref = '#athlete-review
               {selection.added ? 'Added to bag' : `Add to bag — ${formatPrice(total, true)}`}
             </button>
             <button
+              id="product-wishlist-toggle"
               type="button"
               aria-pressed={selection.liked}
               aria-label={selection.liked ? 'Remove from wishlist' : 'Save to wishlist'}
@@ -115,6 +140,7 @@ export function ProductInfo({ product, selection, reviewsHref = '#athlete-review
           </div>
 
           <button
+            id="product-buy-now"
             type="button"
             onClick={selection.buyNow}
             className="rounded-lg border border-primary py-3.5 font-label-lg text-label-lg uppercase tracking-wider text-on-surface transition-colors hover:bg-surface-container"
@@ -123,10 +149,11 @@ export function ProductInfo({ product, selection, reviewsHref = '#athlete-review
           </button>
         </div>
 
-        <ul className="flex flex-col gap-space-xs">
+        <ul data-element="product-assurance-list" className="flex flex-col gap-space-xs">
           {ASSURANCES.map((item) => (
             <li
               key={item.label}
+              data-element="product-assurance"
               className="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"
             >
               <Icon name={item.icon} className="text-[18px] text-tertiary-container" />

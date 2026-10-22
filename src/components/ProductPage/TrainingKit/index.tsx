@@ -16,9 +16,9 @@ export function TrainingKit({ items, bundle, onAddItem, onAddBundle }: TrainingK
   const bundleSave = bundle ? discountPercent(bundle.bundlePrice, bundle.originalPrice) : undefined
 
   return (
-    <section id="training-kit" className="w-full bg-surface-container-low py-margin-md">
+    <section id="training-kit" data-component="TrainingKit" className="w-full bg-surface-container-low py-margin-md">
       <Container className="flex flex-col gap-space-lg">
-        <div className="flex flex-wrap items-end justify-between gap-space-sm">
+        <div data-element="training-kit-header" className="flex flex-wrap items-end justify-between gap-space-sm">
           <div>
             <span className="font-label-technical text-label-technical uppercase tracking-widest text-on-surface-variant">
               Built to pair
@@ -28,6 +28,7 @@ export function TrainingKit({ items, bundle, onAddItem, onAddBundle }: TrainingK
             </h2>
           </div>
           <a
+            id="training-kit-browse-link"
             href="#/shop"
             className="flex items-center gap-1 font-label-technical text-label-technical uppercase tracking-widest text-on-surface-variant transition-colors hover:text-on-surface"
           >
@@ -36,14 +37,17 @@ export function TrainingKit({ items, bundle, onAddItem, onAddBundle }: TrainingK
           </a>
         </div>
 
-        <div className="grid grid-cols-1 gap-space-md sm:grid-cols-2 lg:grid-cols-3">
+        <div data-element="training-kit-grid" className="grid grid-cols-1 gap-space-md sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <KitCard key={item.id} item={item} onAdd={onAddItem} />
           ))}
         </div>
 
         {bundle && (
-          <div className="flex flex-col gap-space-md rounded-xl bg-primary-container p-space-md text-on-primary md:flex-row md:items-center md:justify-between md:p-space-lg">
+          <div
+            id="training-kit-bundle"
+            className="flex flex-col gap-space-md rounded-xl bg-primary-container p-space-md text-on-primary md:flex-row md:items-center md:justify-between md:p-space-lg"
+          >
             <div className="flex items-start gap-space-sm">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-tertiary-container text-on-tertiary">
                 <Icon name={bundle.icon} className="text-[20px]" />
@@ -58,7 +62,7 @@ export function TrainingKit({ items, bundle, onAddItem, onAddBundle }: TrainingK
 
             <div className="flex shrink-0 items-center gap-space-md">
               <span className="flex flex-col">
-                <span className="font-headline-sm text-headline-sm font-bold text-on-primary">
+                <span data-element="bundle-price" className="font-headline-sm text-headline-sm font-bold text-on-primary">
                   {formatPrice(bundle.bundlePrice, true)}
                 </span>
                 <span className="font-label-technical text-label-technical uppercase tracking-wider text-on-primary-container">
@@ -68,6 +72,7 @@ export function TrainingKit({ items, bundle, onAddItem, onAddBundle }: TrainingK
               </span>
 
               <button
+                id="training-kit-add-bundle"
                 type="button"
                 onClick={() => onAddBundle?.(bundle.id)}
                 className="rounded-lg bg-surface-container-lowest px-space-md py-3 font-label-lg text-label-lg uppercase tracking-wider text-primary transition-colors hover:bg-surface-bright"

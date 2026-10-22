@@ -53,16 +53,16 @@ export default function ProductPage({
   const selection = useProductSelection({ product, onAddToBag, onBuyNow })
 
   return (
-    <div className="bg-surface font-body-md text-on-surface antialiased">
+    <div id="product-page" data-component="ProductPage" className="bg-surface font-body-md text-on-surface antialiased">
       {/* shortcut: Header/Footer still live under LandingPage; promote them to components/layout once a router lands. */}
       <Header />
 
       {/* pt = announcement bar (~36px) + header (80px) */}
-      <main className="w-full bg-surface pt-[116px]">
+      <main id="product-main" className="w-full bg-surface pt-[116px]">
         <Breadcrumbs trail={product.breadcrumbs} current={product.name} />
 
         <Container className="py-space-lg">
-          <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-12 lg:items-start">
+          <div id="product-overview" className="grid grid-cols-1 gap-space-lg lg:grid-cols-12 lg:items-start">
             <ProductGallery
               images={product.images}
               grade={product.grade}

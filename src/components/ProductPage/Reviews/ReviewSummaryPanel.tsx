@@ -17,10 +17,14 @@ export function ReviewSummaryPanel({
   onWriteReview,
 }: ReviewSummaryPanelProps) {
   return (
-    <div className="grid grid-cols-1 gap-space-lg rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-space-md md:p-space-lg lg:grid-cols-12">
+    <div
+      id="review-summary"
+      data-component="ReviewSummaryPanel"
+      className="grid grid-cols-1 gap-space-lg rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-space-md md:p-space-lg lg:grid-cols-12"
+    >
       <div className="flex flex-col items-start gap-space-xs lg:col-span-4 lg:border-r lg:border-outline-variant/60 lg:pr-space-lg">
         <span className="flex items-baseline gap-1">
-          <span className="font-display-hero-mobile text-display-hero-mobile text-on-surface">
+          <span data-element="review-average-score" className="font-display-hero-mobile text-display-hero-mobile text-on-surface">
             {summary.average.toFixed(1)}
           </span>
           <span className="font-body-md text-body-md text-on-surface-variant">/ 5</span>
@@ -28,16 +32,20 @@ export function ReviewSummaryPanel({
 
         <StarRating value={summary.average} size="text-[20px]" />
 
-        <p className="font-body-sm text-body-sm text-on-surface-variant">
+        <p data-element="review-verified-count" className="font-body-sm text-body-sm text-on-surface-variant">
           Based on {summary.verifiedTotal} verified athlete reviews
         </p>
 
-        <span className="rounded-sm bg-tertiary-container/10 px-2 py-1 font-label-technical text-label-technical uppercase tracking-wider text-tertiary-container">
+        <span
+          data-element="review-recommend-percent"
+          className="rounded-sm bg-tertiary-container/10 px-2 py-1 font-label-technical text-label-technical uppercase tracking-wider text-tertiary-container"
+        >
           {summary.recommendPercent}% would recommend
         </span>
 
         {/* placeholder: opens the review composer once submissions are wired. */}
         <button
+          id="write-review-button"
           type="button"
           onClick={onWriteReview}
           className="mt-space-xs w-full rounded-lg bg-primary px-space-md py-3 font-label-lg text-label-lg uppercase tracking-wider text-on-primary transition-colors hover:bg-primary-container"
@@ -46,7 +54,7 @@ export function ReviewSummaryPanel({
         </button>
       </div>
 
-      <div className="flex flex-col gap-space-xs lg:col-span-8">
+      <div data-element="review-rating-breakdown" className="flex flex-col gap-space-xs lg:col-span-8">
         <span className="font-label-technical text-label-technical uppercase tracking-widest text-on-surface-variant">
           Rating breakdown
         </span>
@@ -57,6 +65,7 @@ export function ReviewSummaryPanel({
           return (
             <button
               key={bar.stars}
+              data-element="review-rating-bar"
               type="button"
               aria-pressed={isActive}
               aria-label={`Show ${bar.stars} star reviews (${bar.count})`}

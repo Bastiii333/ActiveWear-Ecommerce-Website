@@ -11,12 +11,13 @@ const stepBtn =
 
 export function QuantityStepper({ value, onChange, max = 10 }: QuantityStepperProps) {
   return (
-    <div className="flex items-center gap-space-sm">
+    <div id="product-quantity-stepper" data-component="QuantityStepper" className="flex items-center gap-space-sm">
       <span className="font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
         Qty
       </span>
       <div className="flex items-center overflow-hidden rounded-lg border border-outline-variant bg-surface-container-lowest">
         <button
+          id="quantity-decrement"
           type="button"
           aria-label="Decrease quantity"
           disabled={value <= 1}
@@ -25,10 +26,11 @@ export function QuantityStepper({ value, onChange, max = 10 }: QuantityStepperPr
         >
           <Icon name="remove" className="text-[18px]" />
         </button>
-        <span aria-live="polite" className="w-10 text-center font-label-lg text-label-lg text-on-surface">
+        <span data-element="quantity-value" aria-live="polite" className="w-10 text-center font-label-lg text-label-lg text-on-surface">
           {value}
         </span>
         <button
+          id="quantity-increment"
           type="button"
           aria-label="Increase quantity"
           disabled={value >= max}

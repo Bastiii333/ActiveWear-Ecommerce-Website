@@ -22,10 +22,11 @@ function starsFilterKey(stars: number): ReviewFilterKey {
 
 function EmptyState({ onClear }: { onClear: () => void }) {
   return (
-    <div className="flex flex-col items-center gap-space-sm py-margin-md text-center">
+    <div data-element="reviews-empty-state" className="flex flex-col items-center gap-space-sm py-margin-md text-center">
       <Icon name="rate_review" className="text-[32px] text-on-surface-variant/40" />
       <p className="font-body-md text-body-md text-on-surface-variant">No reviews match this filter yet.</p>
       <button
+        id="reviews-clear-filter"
         type="button"
         onClick={onClear}
         className="font-label-technical text-label-technical uppercase tracking-wider text-tertiary-container underline underline-offset-2"
@@ -38,7 +39,12 @@ function EmptyState({ onClear }: { onClear: () => void }) {
 
 function LoadingRows() {
   return (
-    <div className="flex flex-col gap-space-lg py-space-lg" aria-busy="true" aria-live="polite">
+    <div
+      data-element="reviews-loading"
+      className="flex flex-col gap-space-lg py-space-lg"
+      aria-busy="true"
+      aria-live="polite"
+    >
       {[0, 1, 2].map((row) => (
         <div key={row} className="h-32 animate-pulse rounded-lg bg-surface-container-low" />
       ))}
@@ -61,9 +67,9 @@ export function Reviews({
     controller.setFilter(activeStars === stars ? 'all' : starsFilterKey(stars))
 
   return (
-    <section id="athlete-reviews" className="w-full bg-surface py-margin-md">
+    <section id="athlete-reviews" data-component="Reviews" className="w-full bg-surface py-margin-md">
       <Container className="flex flex-col gap-space-lg">
-        <div className="flex flex-wrap items-start justify-between gap-space-md">
+        <div data-element="reviews-header" className="flex flex-wrap items-start justify-between gap-space-md">
           <div>
             <span className="font-label-technical text-label-technical uppercase tracking-widest text-tertiary-container">
               Athlete field reports
@@ -85,7 +91,7 @@ export function Reviews({
           onWriteReview={onWriteReview}
         />
 
-        <div className="flex flex-col">
+        <div id="review-list" className="flex flex-col">
           <ReviewToolbar
             filter={controller.filter}
             sort={controller.sort}
@@ -106,6 +112,7 @@ export function Reviews({
 
           {!isLoading && controller.hasMore && (
             <button
+              id="reviews-load-more"
               type="button"
               onClick={controller.loadMore}
               className="mx-auto mt-space-lg flex items-center gap-space-xs rounded-lg border border-primary px-space-lg py-3 font-label-lg text-label-lg uppercase tracking-wider text-on-surface transition-colors hover:bg-surface-container"

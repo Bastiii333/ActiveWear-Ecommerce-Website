@@ -10,7 +10,12 @@ interface StarRatingProps {
 /** Five Material stars, half-steps rounded down to the nearest filled star. */
 export default function StarRating({ value, size = 'text-[16px]', className = '' }: StarRatingProps) {
   return (
-    <span className={`flex items-center gap-0.5 ${className}`} role="img" aria-label={`${value} out of 5 stars`}>
+    <span
+      data-component="StarRating"
+      className={`flex items-center gap-0.5 ${className}`}
+      role="img"
+      aria-label={`${value} out of 5 stars`}
+    >
       {[1, 2, 3, 4, 5].map((star) => {
         const filled = value >= star - 0.25
         const half = !filled && value >= star - 0.75

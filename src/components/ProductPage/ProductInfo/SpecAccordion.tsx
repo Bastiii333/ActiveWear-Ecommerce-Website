@@ -12,13 +12,14 @@ export function SpecAccordion({ groups, defaultOpenId }: SpecAccordionProps) {
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null)
 
   return (
-    <div className="divide-y divide-outline-variant border-y border-outline-variant">
+    <div id="product-spec-accordion" data-component="SpecAccordion" className="divide-y divide-outline-variant border-y border-outline-variant">
       {groups.map((group) => {
         const isOpen = openId === group.id
         return (
-          <div key={group.id}>
+          <div key={group.id} data-element="spec-group">
             <h3>
               <button
+                data-element="spec-group-trigger"
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={`spec-panel-${group.id}`}
@@ -37,9 +38,13 @@ export function SpecAccordion({ groups, defaultOpenId }: SpecAccordionProps) {
             </h3>
 
             {isOpen && (
-              <dl id={`spec-panel-${group.id}`} className="grid gap-space-xs pb-space-md">
+              <dl
+                id={`spec-panel-${group.id}`}
+                data-element="spec-group-panel"
+                className="grid gap-space-xs pb-space-md"
+              >
                 {group.rows.map((row) => (
-                  <div key={row.label} className="grid grid-cols-[120px_minmax(0,1fr)] gap-space-sm">
+                  <div key={row.label} data-element="spec-row" className="grid grid-cols-[120px_minmax(0,1fr)] gap-space-sm">
                     <dt className="font-label-technical text-label-technical uppercase tracking-wider text-on-surface-variant">
                       {row.label}
                     </dt>

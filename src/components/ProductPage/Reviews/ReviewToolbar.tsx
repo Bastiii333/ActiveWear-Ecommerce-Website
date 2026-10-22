@@ -12,11 +12,16 @@ interface ReviewToolbarProps {
 
 export function ReviewToolbar({ filter, sort, summary, onFilterChange, onSortChange }: ReviewToolbarProps) {
   return (
-    <div className="flex flex-col gap-space-sm py-space-sm lg:flex-row lg:items-center lg:justify-between">
+    <div
+      id="review-toolbar"
+      data-component="ReviewToolbar"
+      className="flex flex-col gap-space-sm py-space-sm lg:flex-row lg:items-center lg:justify-between"
+    >
       <div className="flex gap-space-xs overflow-x-auto pb-1" role="tablist" aria-label="Filter reviews">
         {REVIEW_FILTERS.map((option) => (
           <button
             key={option.key}
+            data-element="review-filter-tab"
             role="tab"
             aria-selected={filter === option.key}
             onClick={() => onFilterChange(option.key)}
@@ -37,6 +42,7 @@ export function ReviewToolbar({ filter, sort, summary, onFilterChange, onSortCha
           Sort by
         </span>
         <select
+          id="review-sort-select"
           value={sort}
           onChange={(event) => onSortChange(event.target.value as ReviewSortKey)}
           className="rounded-lg border border-outline-variant bg-surface-container-lowest px-space-sm py-2 font-label-md text-label-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"

@@ -22,16 +22,25 @@ export function ProductGallery({ images, grade, highlights, liked, onToggleLiked
   const step = (dir: 1 | -1) => setIndex((i) => (i + dir + total) % total)
 
   return (
-    <div className="lg:col-span-7">
-      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-surface-container-low sm:aspect-square">
-        <img key={active.id} src={active.url} alt={active.alt} className="h-full w-full object-cover" />
+    <div id="product-gallery" data-component="ProductGallery" className="lg:col-span-7">
+      <div data-element="gallery-stage" className="group relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-surface-container-low sm:aspect-square">
+        <img
+          key={active.id}
+          data-element="gallery-active-image"
+          src={active.url}
+          alt={active.alt}
+          className="h-full w-full object-cover"
+        />
 
-        <span className="absolute left-4 top-4 rounded-full bg-tertiary-container px-3 py-1 font-label-technical text-label-technical font-bold uppercase tracking-widest text-on-tertiary">
+        <span
+          data-element="gallery-grade-badge"
+          className="absolute left-4 top-4 rounded-full bg-tertiary-container px-3 py-1 font-label-technical text-label-technical font-bold uppercase tracking-widest text-on-tertiary">
           {grade}
         </span>
 
         <div className="absolute right-4 top-4 flex flex-col gap-space-xs">
           <button
+            id="gallery-wishlist-toggle"
             type="button"
             aria-pressed={liked}
             aria-label={liked ? 'Remove from wishlist' : 'Save to wishlist'}
@@ -42,6 +51,7 @@ export function ProductGallery({ images, grade, highlights, liked, onToggleLiked
           </button>
           {/* placeholder: opens the zoom viewer once the media service is wired. */}
           <button
+            id="gallery-expand-image"
             type="button"
             aria-label="Expand image"
             className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container-lowest/85 text-on-surface-variant shadow-sm backdrop-blur transition-colors hover:text-on-surface"
@@ -50,10 +60,14 @@ export function ProductGallery({ images, grade, highlights, liked, onToggleLiked
           </button>
         </div>
 
-        <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-space-sm rounded-lg bg-surface/90 px-space-sm py-space-xs backdrop-blur-md">
+        <div
+          data-element="gallery-highlights"
+          className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-space-sm rounded-lg bg-surface/90 px-space-sm py-space-xs backdrop-blur-md"
+        >
           {highlights.map((highlight) => (
             <span
               key={highlight.label}
+              data-element="gallery-highlight"
               className="flex items-center gap-1 font-label-technical text-label-technical uppercase tracking-wider text-on-surface"
             >
               <Icon name={highlight.icon} className="text-[16px] text-tertiary-container" />
@@ -64,6 +78,7 @@ export function ProductGallery({ images, grade, highlights, liked, onToggleLiked
 
         <div className="pointer-events-none absolute inset-x-4 top-1/2 flex -translate-y-1/2 justify-between opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
           <button
+            id="gallery-prev-image"
             type="button"
             aria-label="Previous image"
             onClick={() => step(-1)}
@@ -72,6 +87,7 @@ export function ProductGallery({ images, grade, highlights, liked, onToggleLiked
             <Icon name="arrow_back" className="text-[20px]" />
           </button>
           <button
+            id="gallery-next-image"
             type="button"
             aria-label="Next image"
             onClick={() => step(1)}
@@ -83,10 +99,11 @@ export function ProductGallery({ images, grade, highlights, liked, onToggleLiked
       </div>
 
       <div className="mt-space-sm flex items-center justify-between gap-space-sm">
-        <div className="flex gap-space-sm overflow-x-auto pb-1">
+        <div data-element="gallery-thumbnail-strip" className="flex gap-space-sm overflow-x-auto pb-1">
           {images.map((image, i) => (
             <button
               key={image.id}
+              data-element="gallery-thumbnail"
               type="button"
               aria-label={image.alt}
               aria-current={i === index}
@@ -100,7 +117,10 @@ export function ProductGallery({ images, grade, highlights, liked, onToggleLiked
           ))}
         </div>
 
-        <span className="hidden shrink-0 items-center gap-1 font-label-technical text-label-technical text-on-surface-variant sm:flex">
+        <span
+          data-element="gallery-image-counter"
+          className="hidden shrink-0 items-center gap-1 font-label-technical text-label-technical text-on-surface-variant sm:flex"
+        >
           <span className="font-bold text-on-surface">{pad(index + 1)}</span> / {pad(total)}
         </span>
       </div>
