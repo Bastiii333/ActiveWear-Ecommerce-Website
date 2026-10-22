@@ -229,8 +229,7 @@ export function FilterSidebar({
     <aside className="h-fit min-w-0 rounded-xl border border-surface-container-high/70 bg-surface-container-lowest p-space-md shadow-sm lg:sticky lg:top-[132px]">
       <div className="flex items-center justify-between gap-space-sm">
         <div className="flex items-center gap-space-xs">
-          <Icon name="tune" className="text-[18px] text-on-surface" />
-          <h2 className="font-label-lg text-label-lg uppercase tracking-wider text-on-surface">Refine Gear</h2>
+          <h2 className="font-label-lg text-label-lg uppercase tracking-wider text-on-surface">Filter</h2>
         </div>
         <button
           type="button"
@@ -244,7 +243,7 @@ export function FilterSidebar({
 
       <ActiveChips controller={controller} />
 
-      <FilterSection title="Movement Discipline">
+      <FilterSection title="">
         <DisciplineFilter controller={controller} facets={facets} />
       </FilterSection>
 
