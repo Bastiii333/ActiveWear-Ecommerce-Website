@@ -1,11 +1,4 @@
 export const NAV_LINKS = [
-  { label: 'Shop', href: '#/shop' },
-  { label: 'New Arrivals', href: '#' },
-  { label: 'Best Sellers', href: '#' },
-  { label: 'Collections', href: '#' },
-  { label: 'Community', href: '#' },
-]
-export const LANDING_NAV_LINKS = [
   { label: 'Home', href: '#/' },
   { label: 'Shop', href: '#/shop' },
   { label: 'About Us', href: '#/about' },
