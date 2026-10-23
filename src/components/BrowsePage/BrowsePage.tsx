@@ -32,7 +32,7 @@ export default function BrowsePage({ products = CATALOG_PRODUCTS, facets, isLoad
   return (
     <div id="browse-page" data-component="BrowsePage" className="bg-surface font-body-md text-on-surface antialiased">
       {/* shortcut: Header/Footer still live under LandingPage; promote them to components/layout once a router lands. */}
-      <Header searchValue={catalog.filters.search} onSearchChange={catalog.setSearch} />
+      <Header />
 
       <main id="browse-main" className="w-full bg-surface pt-[116px]">
         <CatalogHeader />
